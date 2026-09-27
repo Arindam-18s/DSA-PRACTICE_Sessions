@@ -40,29 +40,52 @@ def graph_list_way_insertion():
 
 # ---------------------------------------------------------------------------------------------------
 # Breadth Firat Search(BFS) - Level Order Traversal - O(N x E) N = np. of nodes, E = no. of edgess
-from collections import deque
 
-def BFS(n : int, adj_list):
-    element_storage = deque()
+from collections import deque
+def BFS(n, adj_list):
+    Q = deque()
     visited = [False] * n
-    visited[1] = True           # Starting node is visited first
-    element_storage.append(1)   # Appending the starting node
+    Q.append(1)                                     # Starting node is visited first
+    visited[1] = True                               # Appending the starting node
     bfs_result = []
 
-    while(element_storage):
-        node = element_storage.popleft()    # Current Top of the Queue
-        bfs_result.append(node)
+    while Q:
+        current_node = Q.popleft()                  # Head Of the Q
+        bfs_result.append(current_node)
 
-        # Explore neighbors
-        for neighbor in adj_list[node]:     # Finds the neightbours of the current node by fetching elements from the adj_list, 
-            if not visited[neighbor]:       # where current node is the index of the adj_list and its neightbours 
-                element_storage.append(neighbor)                          # are the stored elements at that index
-                visited[neighbor] = True
+        for neighbour in adj_list[current_node]:    # Finds the neightbours of the current node by fetching elements 
+            if not visited[neighbour]:              # from the adj_list, where current node is the index of the adj_list 
+                Q.append(neighbour)                 # and its neightbours are the stored elements at that index
+                visited[neighbour] = True
     return bfs_result
-
-# ---------------------------------------------------------------------------------------------------
 
 if __name__ == "__main__":
     n = 8
     adj_list = [[], [2, 6], [1, 3, 4], [2], [2],[7], [1, 7, 8], [5, 6], [6]]
-    print(BFS(n + 1, adj_list))
+    # print(BFS(n + 1, adj_list))
+
+# ---------------------------------------------------------------------------------------------------
+# Depth Firat Search(DFS) - Depth Order Traversal - O(N) + O(2 x E) N = no. of nodes, E = no. of edgess
+
+def DFS(current_node, visited, adj_list, dfs_result):       # RECURSIVE Soln.
+    visited[current_node] = True                            # Visit the current Node
+    dfs_result.append(current_node)                         # Add the Current Node to the DFS Traversal result
+
+    for neighbour in adj_list[current_node]:                # Finds the neightbours of the current node by fetching elements 
+        if not visited[neighbour]:                          # from the adj_list, where current node is the index of the adj_list 
+            DFS(neighbour, visited, adj_list, dfs_result)   # and its neightbours are the stored elements at that index
+            visited[neighbour] = True
+
+if __name__ == "__main__":
+    n = 8
+    adj_list = [[], [2, 3], [1, 5, 6], [1, 4, 7], [3, 8], [2], [2], [3, 8], [4, 7]]
+    visited = [False] * (n + 1)     # For 1 Based Indexing
+    current_node = 1                # Starting Node
+    dfs_result = []
+    # DFS(current_node, visited, adj_list, dfs_result)
+    # print(dfs_result)
+
+# ---------------------------------------------------------------------------------------------------
+
+
+
