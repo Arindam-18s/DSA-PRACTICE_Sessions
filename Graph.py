@@ -54,10 +54,10 @@ def BFS(n : int, adj_list):
         bfs_result.append(node)
 
         # Explore neighbors
-        for neighbor in adj_list[node]:
-            if not visited[neighbor]:
+        for neighbor in adj_list[node]:     # Finds the neightbours of the current node by fetching elements from the adj_list, 
+            if not visited[neighbor]:       # where current node is the index of the adj_list and its neightbours 
+                element_storage.append(neighbor)                          # are the stored elements at that index
                 visited[neighbor] = True
-                element_storage.append(neighbor)
     return bfs_result
 
 # ---------------------------------------------------------------------------------------------------

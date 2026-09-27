@@ -2501,11 +2501,23 @@ while char != len(s):   # General Loop
 print(output)
 
 #---------------------------------------------------------------------------------------------------
+# 1190. Reverse Substrings Between Each Pair of Parentheses - Input: s = "(ed(et(oc))el)" | Output: "leetcode"
 
+s = "(ed(et(oc))el)"
+stack = []
+ans = ""
 
+for char in s:
+    if char == "(":
+        stack.append(ans)
+        ans = ""
+    elif char == ")":
+        ans = ans[::-1]
+        ans = stack.pop() + ans
+    else:
+        ans += char
 
-
-
+print(ans)
 
 #---------------------------------------------------------------------------------------------------
 
