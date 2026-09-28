@@ -2520,19 +2520,60 @@ for char in s:
 print(ans)
 
 #---------------------------------------------------------------------------------------------------
+# LeetCode - 994 - Rotten Oranges. 0(N x M)
 
+from collections import deque
+class Solution:
+    def orangesRotting(self, grid: list[list[int]]) -> int:
+        if not grid: 
+            return 0
+        rows, columns = len(grid), len(grid[0])
+        queue = deque()
+        fresh_count = 0
 
+        # Initialize queue with all rotten oranges
+        for row in range(rows):
+            for cols in range(columns):
+                if grid[row][cols] == 2:
+                    queue.append((row, cols, 0)) # (row, col, time)
+                elif grid[row][cols] == 1:
+                    fresh_count += 1
 
+        time = 0
+        # Directions for BFS: up, down, left, right
+        directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]
 
+        while queue:
+            row, cols, time = queue.popleft()
+            for dr, dc in directions:
+                nr, nc = row + dr, cols + dc
+                if 0 <= nr < rows and 0 <= nc < columns and grid[nr][nc] == 1:
+                    grid[nr][nc] = 2
+                    fresh_count -= 1
+                    queue.append((nr, nc, time + 1))
 
+        return time if fresh_count == 0 else -1
 
 #---------------------------------------------------------------------------------------------------
+# 1614. Maximum Nesting Depth of the Parentheses | Input: s = "(1+(2*3)+((8)/4))+1" Output: 3 | Input: s = "(1)+((2))+(((3)))" / Output: 3
 
-
-
-
-
-
+class Solution:
+    def maxDepth(self, s: str) -> int:
+        if not s:
+            return 0
+        current_depacth = 0
+        max_depth = float('-inf')
+        for char in s:
+            if char == "(":
+                current_depth += 1
+                max_depth = max(max_depth, current_depth)
+            elif char == ")":
+                current_depth -= 1
+                max_depth = max(max_depth, current_depth)
+            else:
+                max_depth = max(max_depth, current_depth)
+                continue
+        return max_depth
 
 #---------------------------------------------------------------------------------------------------
 
