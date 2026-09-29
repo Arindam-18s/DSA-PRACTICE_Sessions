@@ -1,11 +1,13 @@
 # Two SUM
-seen = {}  # will store {value: index}
+def Two_sum():
+    seen = {}  # will store {value: index}
 
-for i, num in enumerate(nums):
-    complement = target - num  # For each number, check if its "complement" (the number needed to reach the target) 
-    if complement in seen:     # has already been seen.If yes, you found your pair. If no, 
-        print [seen[complement], i] # remember this number's value and index for future checks.
-    seen[num] = i
+    for i, num in enumerate(nums):
+        complement = target - num  # For each number, check if its "complement" (the number needed to reach the target) 
+        if complement in seen:     # has already been seen.If yes, you found your pair. If no, 
+            print [seen[complement], i] # remember this number's value and index for future checks.
+        seen[num] = i
+
 # -------------------------------------------------
 # Palindrome
 class Solution(object):
@@ -360,8 +362,15 @@ print(max(max1 * max2 * max3,max1 * min1 * min2))
 # ------------------------------------------------- 
 # 100. Same Tree
 
+from collections import deque
+class TreeNode:             # Definition for a binary tree node.
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
 class Solution:
-    def isSameTree(self, p: Optional[TreeNode], q: Optional[TreeNode]) -> bool:
+    def isSameTree(self, p: TreeNode, q: TreeNode) -> bool:
         # Both nodes are None -> structurally identical at this branch
         if not p and not q:
             return True
@@ -400,14 +409,14 @@ class Solution:
 # 102. Binary Tree Level Order Traversal
 
 from collections import deque
-# Definition for a binary tree node.
-# class TreeNode:
-#     def __init__(self, val=0, left=None, right=None):
-#         self.val = val
-#         self.left = left
-#         self.right = right
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
 class Solution:
-    def levelOrder(self, root: Optional[TreeNode]) -> List[List[int]]:
+    def levelOrder(self, root: TreeNode) -> List[List[int]]:
         if root is None:
             return []
         
@@ -429,6 +438,7 @@ class Solution:
             ans.append(level)
 
         return ans
+
 # ------------------------------------------------- 
 # 202. Happy Number
 
@@ -571,8 +581,9 @@ class ListNode:
     def __init__(self, val=0, next=None):
         self.val = val
         self.next = next
+        
 class Solution:
-    def mergeTwoLists(self, list1: Optional[ListNode], list2: Optional[ListNode]) -> Optional[ListNode]:
+    def mergeTwoLists(self, list1: ListNode, list2: ListNode) -> ListNode:
         dummy = ListNode()
         tail = dummy
 
@@ -998,7 +1009,7 @@ class Solution:
 #         self.val = val
 #         self.next = next
 class Solution:
-    def deleteMiddle(self, head: Optional[ListNode]) -> Optional[ListNode]:
+    def deleteMiddle(self, head: ListNode) -> ListNode:
         count = 0
         curr = head
         prev = None
@@ -1388,7 +1399,7 @@ class ListNode:
         self.next = next
 
 class Solution:
-    def removeNthFromEnd(self, head: Optional[ListNode], n: int) -> Optional[ListNode]:
+    def removeNthFromEnd(self, head: ListNode, n: int) -> ListNode:
         dummy = ListNode() 
         dummy.next = head       # starts just before the head node for the purpose of handling edge cases
 
@@ -1408,7 +1419,7 @@ class Solution:
 # 23. Merge k Sorted Lists
 
 class Solution:
-    def mergeKLists(self, lists: List[Optional[ListNode]]) -> Optional[List]:
+    def mergeKLists(self, lists: List[ListNode]) -> List:
         if not lists or len(lists) == 0:
             return None
         while(len(lists) > 1):
@@ -1768,8 +1779,9 @@ class Solution:
 #     def __init__(self, val=0, next=None):
 #         self.val = val
 #         self.next = next
+
 class Solution:
-    def nodesBetweenCriticalPoints(self, head: Optional[ListNode]) -> List[int]:
+    def nodesBetweenCriticalPoints(self, head: ListNode) -> List[int]:
         result = [-1, -1]
         minDistance = float('inf')
         prev = head
@@ -1843,7 +1855,7 @@ class Solution:
 # 148. Sort List - Input: head = [4,2,1,3] Output: [1,2,3,4] time-col => O(NLOGN) space col => O(LOG N)
 
 class Solution:
-    def sortList(self, head: Optional[ListNode]) -> Optional[ListNode]:
+    def sortList(self, head: ListNode) -> ListNode:
         if not head or not head.next:
             return head
 
@@ -2183,6 +2195,37 @@ class Solution:
         nums.sort()
         used = [False] * len(nums)
         return self.all_possible_with_duplicates(nums, [], [], used)
+
+#---------------------------------------------------------------------------------------------------
+# 3483. Unique 3-Digit Even Numbers - Input: digits = [1,2,3,4] Output: 12 - ** SAME TO SAME PERMUTATION Problem **
+# The 12 distinct 3-digit even numbers that can be formed are 124, 132, 134, 142, 214, 234, 312, 314, 324, 342, 412, and 432. 
+                                                # Note that 222 cannot be formed because there is only 1 copy of the digit 2.
+
+class Solution:
+    def subseq_with_no_leading_zeroes(self, digits, current_subseq, ans, used):
+        if len(current_subseq) == 3:
+            if current_subseq[0] != 0 and current_subseq[2] % 2 == 0:
+                ans[0] += 1
+            return
+        for i in range(len(digits)):
+            if used[i]:
+                continue
+            if i > 0 and digits[i] == digits[i - 1] and not used[i - 1]:
+                continue
+            used[i] = True
+            current_subseq.append(digits[i])
+            self.subseq_with_no_leading_zeroes(digits, current_subseq, ans, used)
+            current_subseq.pop()
+            used[i] = False
+        return ans
+    
+    def totalNumbers(self, digits: List[int]) -> int:
+        if not digits or len(digits) <= 2:
+            return 0
+        digits.sort()
+        used = [False] * len(digits)
+        res = self.subseq_with_no_leading_zeroes(digits, [], [0], used)
+        return res[0]
 
 #---------------------------------------------------------------------------------------------------
 # LeetCode - 60. K-th Permutation(Permutation Sequence) Tcol- O(n! . n), Scol- 0(K.n)
@@ -2576,13 +2619,40 @@ class Solution:
         return max_depth
 
 #---------------------------------------------------------------------------------------------------
+# LeetCode - 2608. Shortest Cycle in a Graph - Input: n = 7, edges = [[0,1],[1,2],[2,0],[3,4],[4,5],[5,6],[6,3]] | Output: 3
+# Explanation: The cycle with the smallest length is : 0 -> 1 -> 2 -> 0 | Time: O(V · (V + E)) , Space: O(V + E) 
+                                                                         # N = no. of nodes, E = no. of edgess
+from collections import deque
+def detect_cycle_BFS(source_node, adj_list, n):
+    dist = [-1] * (n)
+    Q = deque()
+    Q.append([source_node, -1])     # [Current_node, Parent_node]
+    dist[source_node] = 0
+    current_cycle_length = float("inf")
 
+    while Q:
+        current_node = Q.popleft()
+        current_child_node, current_parent_node = current_node[0], current_node[1]
 
+        for neighbour in adj_list[current_child_node]:
+            if dist[neighbour] == -1:
+                dist[neighbour] = dist[current_child_node] + 1
+                Q.append([neighbour, current_child_node])
+            elif current_parent_node != neighbour:
+                # closed a cycle: path to child + path to neighbour + this edge
+                local_cycle_length = dist[neighbour] + dist[current_child_node] + 1
+                current_cycle_length = min(current_cycle_length, local_cycle_length)
+    return current_cycle_length
 
+if __name__ == "__main__":
+    n = 9
+    adj_list = [[], [2, 3], [1, 4], [1], [2], [6], [5], [8, 9], [7, 9], [7, 8]]
 
-
-
-
+    min_shortest_path = float("inf")
+    for i in range(n + 1):      # BFS from EVERY node, fresh dist each time
+        shortest_path = detect_cycle_BFS(i, adj_list, n + 1)
+        min_shortest_path = min(shortest_path, min_shortest_path)
+    print(-1 if min_shortest_path == float("inf") else "Shortest Cycles Length is  : ", min_shortest_path)
 
 #---------------------------------------------------------------------------------------------------
 

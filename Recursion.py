@@ -422,6 +422,36 @@ class Solution:
         return self.all_possible_with_duplicates(nums, [], [], used)
 
 # --------------------------------------------------------------------------------------------------
+# 3483. Unique 3-Digit Even Numbers - Input: digits = [1,2,3,4] Output: 12 - ** SAME TO SAME PERMUTATION Problem **
+# The 12 distinct 3-digit even numbers that can be formed are 124, 132, 134, 142, 214, 234, 312, 314, 324, 342, 412, and 432. 
+                                                # Note that 222 cannot be formed because there is only 1 copy of the digit 2.
+class Solution:
+    def subseq_with_no_leading_zeroes(self, digits, current_subseq, ans, used):
+        if len(current_subseq) == 3:
+            if current_subseq[0] != 0 and current_subseq[2] % 2 == 0:
+                ans[0] += 1
+            return
+        for i in range(len(digits)):
+            if used[i]:
+                continue
+            if i > 0 and digits[i] == digits[i - 1] and not used[i - 1]:
+                continue
+            used[i] = True
+            current_subseq.append(digits[i])
+            self.subseq_with_no_leading_zeroes(digits, current_subseq, ans, used)
+            current_subseq.pop()
+            used[i] = False
+        return ans
+    
+    def totalNumbers(self, digits: List[int]) -> int:
+        if not digits or len(digits) <= 2:
+            return 0
+        digits.sort()
+        used = [False] * len(digits)
+        res = self.subseq_with_no_leading_zeroes(digits, [], [0], used)
+        return res[0]
+
+# --------------------------------------------------------------------------------------------------
 # 51. N-Queens
 
 def Nqueens_solve(self, column_num, n, board, leftRow, leftUpperDiagonal, leftLowerDiagonal, ans):
