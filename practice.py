@@ -4,7 +4,7 @@ from collections import deque
 def detect_cycle_BFS(current_node, adj_list, visited):
     visited[current_node] = True
     Q = deque()
-    Q.append([current_node, False])
+    Q.append([current_node, False])     # [Current_node, Parent_node]
     while Q:
         current_node = Q.popleft()
         current_child_node = current_node[0]
@@ -24,6 +24,7 @@ if __name__ == "__main__":
     n = 9
     adj_list = [[], [2, 3], [1, 4], [1], [2], [6], [5], [8, 9], [7, 9], [7, 8]]
     visited = [False] * (n + 1)  # 1-based Indexing
+
     has_cycle = False
     for i in range(1, n + 1):  # 1-based Indexing
         if not visited[i]:
@@ -41,9 +42,7 @@ def detect_cycle_DFS(current_node, parent, adj_list, visited):
     for neighbour in adj_list[current_node]:
         if not visited[neighbour]:
             if detect_cycle_DFS(neighbour, current_node, adj_list, visited):
-                return (
-                    True  # Supplying the News of detecting a Cycle To the Root DFS Call
-                )
+                return True  # Supplying the News of detecting a Cycle To the Root DFS Call
         elif neighbour != parent:
             print("This Lad is the Cyclist node : ", neighbour)
             return True  # Actually Finds the cycle Here
@@ -63,10 +62,10 @@ if __name__ == "__main__":
                 has_cycle = True
                 break
 
-    # if has_cycle:
-    #     print("Lads Found a Cycle Even With .DFS, AhaHaahaahhahha")
-    # else:
-    #     print("Lads Couldn't Find a Cycle Even With .DFS, Uhunnhunhnnnnnn")
+    if has_cycle:
+        print("Lads Found a Cycle Even With .DFS, AhaHaahaahhahha")
+    else:
+        print("Lads Couldn't Find a Cycle Even With .DFS, Uhunnhunhnnnnnn")
 
 # --------------------------------------------------------------------------------------
 # LeetCode - 2608. Shortest Cycle in a Graph - Input: n = 7, edges = [[0,1],[1,2],[2,0],[3,4],[4,5],[5,6],[6,3]] | Output: 3
