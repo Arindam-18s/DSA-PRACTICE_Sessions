@@ -2655,12 +2655,26 @@ if __name__ == "__main__":
     print(-1 if min_shortest_path == float("inf") else "Shortest Cycles Length is  : ", min_shortest_path)
 
 #---------------------------------------------------------------------------------------------------
-
-
-
-
-
-
+# 28. Find the Index of the First Occurrence in a String - RollBack Appr. [ Time = 0(N x M) Space = O(1) ]
+                                                            # Where N = Len. of Str. needle and M = Len. of Str. haystack
+haystack = "mississippi"
+needle = "issip"
+class Solution:
+    def strStr(self, haystack: str, needle: str) -> int:
+        if not haystack or not needle or len(needle) > len(haystack):
+            return -1
+        i = j = 0
+        while i < len(haystack):
+            if  haystack[i] == needle[j]:
+                print("Main Stack : ", haystack[i], "+  Substr : ", needle[j])
+                i += 1
+                j += 1
+                if j == len(needle):
+                    return i - j    # Mathematical Formula to find the first occurance of the string
+            else:
+                i = i - j + 1       # Rollback 'i' to the next starting character after where this match began
+                j = 0
+        return -1
 
 #---------------------------------------------------------------------------------------------------
 
