@@ -189,13 +189,32 @@ if __name__ == "__main__":
     print(-1 if min_shortest_path == float("inf") else "Shortest Cycles Length is  : ", min_shortest_path)
 
 # ---------------------------------------------------------------------------------------------------
+# 200. Number of Islands - DFS Appr. Time - O(N x M); Space - O(N x M)
+#                  ->  Testcase - [["1","1","1","1","0"],["1","1","0","1","0"],["1","1","0","0","0"],["0","0","0","0","0"]]
+                     # O/p - 1      ''''''''''''''         '''''      '''       '''''''
+def DFS(grid, i, j):
+    if ( i < 0 or i >= len(grid) or j < 0 or j >= len(grid[0]) or grid[i][j] == "0" ):  # 0 - Means Water Body
+        return  # Base Case
+    grid[i][j] = "0"  # Marking the cell as Visited By Making it a water Body
+    DFS(grid, i + 1, j)
+    DFS(grid, i - 1, j)
+    DFS(grid, i, j + 1)
+    DFS(grid, i, j - 1)
 
-
-
-
-
-
-
+if __name__ == "__main__":  # Number of Islands
+    grid = [                            #     grid = [
+        ["1", "1", "0", "0", "0"],      #               ["| Visited", "Visited |",     "~"     ,     "~"     ,     "~"     ],  
+        ["1", "1", "0", "0", "0"],      #               ["| Visited", "Visited |",     "~"     ,     "~"     ,     "~"     ],
+        ["0", "0", "1", "0", "0"],      #               [     "~"   ,     "~"    ,"| Visited |",     "~"     ,     "~"     ],
+        ["0", "0", "0", "1", "1"],      #               [     "~"   ,     "~"    ,     "~"     , "| Visited" , "Visited |" ],
+    ]
+    count = 0  # Tracks the no. of islands
+    for i in range(len(grid)):
+        for j in range(len(grid[0])):
+            if grid[i][j] == "1":
+                DFS(grid, i, j)
+                count += 1
+    print(count)
 
 # ---------------------------------------------------------------------------------------------------
 

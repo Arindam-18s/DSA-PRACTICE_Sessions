@@ -2677,11 +2677,22 @@ class Solution:
         return -1
 
 #---------------------------------------------------------------------------------------------------
+# 22. Generate Parentheses - Same Permutations BackTracking Intuition -> Time - O(4^n / sqrt(n)); Space - O(n)
+                           # Main Intuition -                         -> We can add ( as long as open < n. 
+                                                                     #-> We can add ) only when close < open
+def permutations(open, close, n, current_perm, output):
+    if len(current_perm) == 2 * n:
+        output.append(current_perm)
+        return
+    if open < n:
+        permutations(open + 1, close, n, current_perm + "(", output)
+    if close < open:
+        permutations(open, close + 1, n, current_perm + ")", output)
+    return output
 
-
-
-
-
-
+if __name__ == "__main__":
+    n = 3
+    # Output: ["((()))","(()())","(())()","()(())","()()()"]
+    print(permutations(0, 0, n, "", []))
 
 #---------------------------------------------------------------------------------------------------

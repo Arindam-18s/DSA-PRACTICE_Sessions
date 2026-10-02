@@ -1,18 +1,40 @@
-haystack = "mississippi"
-needle = "issip"
-class Solution:
-    def strStr(self, haystack: str, needle: str) -> int:
-        if not haystack or not needle or len(needle) > len(haystack):
-            return -1
-        i = j = 0
-        while i < len(haystack):
-            if  haystack[i] == needle[j]:
-                print("Main Stack : ", haystack[i], "+  Substr : ", needle[j])
-                i += 1
-                j += 1
-                if j == len(needle):
-                    return i - j    # Mathematical Formula to find the first occurance of the string
-            else:
-                i = i - j + 1       # Rollback 'i' to the next starting character after where this match began
-                j = 0
-        return -1
+def permutations(open, close, n, current_perm, output):
+    if len(current_perm) == 2 * n:
+        output.append(current_perm)
+        return
+    if open < n:
+        permutations(open + 1, close, n, current_perm + "(", output)
+    if close < open:
+        permutations(open, close + 1, n, current_perm + ")", output)
+    return output
+
+
+# if __name__ == "__main__":
+#     n = 3
+#     # Output: ["((()))","(()())","(())()","()(())","()()()"]
+#     print(permutations(0, 0, n, "", []))
+
+
+def DFS(grid, i, j):
+    if ( i < 0 or i >= len(grid) or j < 0 or j >= len(grid[0]) or grid[i][j] == "0" ):  # 0 - Means Water Body
+        return  # Base Case
+    grid[i][j] = "0"  # Marking the cell as Visited By Making it a water Body
+    DFS(grid, i + 1, j)
+    DFS(grid, i - 1, j)
+    DFS(grid, i, j + 1)
+    DFS(grid, i, j - 1)
+
+if __name__ == "__main__":  # Number of Islands
+    grid = [                            #     grid = [
+        ["1", "1", "0", "0", "0"],      #               ["| Visited", "Visited |",     "~"     ,     "~"     ,     "~"     ],  
+        ["1", "1", "0", "0", "0"],      #               ["| Visited", "Visited |",     "~"     ,     "~"     ,     "~"     ],
+        ["0", "0", "1", "0", "0"],      #               [     "~"   ,     "~"    ,"| Visited |",     "~"     ,     "~"     ],
+        ["0", "0", "0", "1", "1"],      #               [     "~"   ,     "~"    ,     "~"     , "| Visited" , "Visited |" ],
+    ]
+    count = 0  # Tracks the no. of islands
+    for i in range(len(grid)):
+        for j in range(len(grid[0])):
+            if grid[i][j] == "1":
+                DFS(grid, i, j)
+                count += 1
+    print(count)
