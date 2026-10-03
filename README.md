@@ -47,12 +47,13 @@ Daily collection of Data Structures & Algorithms problems solved in Python. This
 ├── Dynamic_Programming/  <-- (Current Focus)
 │   
 └── README.md
-🚀 How to RunClone the repository and run any problem script directly using Python:Bash# Clone repository
-git clone - 
-# Navigate into the folder
-cd 
 
-# Run a script
-python3 HashMaps / Hash_Maps.py
-💡 Key Takeaways & FocusWriting clean, readable Python code leveraging standard libraries like collections and heapq.
-   Analyzing Time & Space Complexities ($O(N)$, $O(\log N)$, etc.) for every problem.Consistently expanding into advanced algorithmic strategies.
+## 🚀 How to RunClone the repository and run any problem script directly using Python:Bash# Clone repository
+   git clone - 
+   # Navigate into the folder
+      cd DSA-PRACTICE_Sessions
+
+   # Run a script
+   python3 HashMaps / Hash_Maps.py
+##💡 Key Takeaways & FocusWriting clean, readable Python code leveraging standard libraries like collections and heapq.
+     Analyzing Time & Space Complexities ($O(N)$, $O(\log N)$, etc.) for every problem.Consistently expanding into advanced algorithmic strategies.
