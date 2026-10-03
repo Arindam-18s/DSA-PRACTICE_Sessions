@@ -13,7 +13,7 @@ Daily collection of Data Structures & Algorithms problems solved in Python. This
 
 ---
 
-## 🛠️ Topics Covered And To be Covered - 
+## 🛠️ Topics Covered And To be Covered
 
 | Category | Topics / Techniques |
 | :--- | :--- |
@@ -37,7 +37,7 @@ Daily collection of Data Structures & Algorithms problems solved in Python. This
 ├── HashMaps/
 │   ├── Hash_Maps.py
 ├── OOPs/
-│   ├──OOP.py
+│   ├── OOP.py
 ├── Linked List/
 │   ├── linked_list.py
 ├── Graphs/
@@ -47,17 +47,29 @@ Daily collection of Data Structures & Algorithms problems solved in Python. This
 ├── Dynamic_Programming/  <-- (Current Focus)
 │   
 └── README.md
+```
 
 ---
 
-## 🚀 How to RunClone the repository and run any problem script directly using Python:Bash# Clone repository
-   git clone - https://github.com/Arindam-18s/DSA-PRACTICE_Sessions.git
-   # Navigate into the folder
-      cd DSA-PRACTICE_Sessions
+## 🚀 How to Run
+
+Clone the repository and run any problem script directly using Python:
+
+```bash
+# Clone repository
+git clone https://github.com/Arindam-18s/DSA-PRACTICE_Sessions.git
+
+# Navigate into the folder
+cd DSA-PRACTICE_Sessions
+
+# Run a script
+python3 "HashMaps/Hash_Maps.py"
+```
 
 ---
 
-   # Run a script
-   python3 HashMaps / Hash_Maps.py
-##💡 Key Takeaways & FocusWriting clean, readable Python code leveraging standard libraries like collections and heapq.
-     Analyzing Time & Space Complexities ($O(N)$, $O(\log N)$, etc.) for every problem.Consistently expanding into advanced algorithmic strategies.
+## 💡 Key Takeaways & Focus
+
+* **Clean Code:** Writing clean, readable Python code leveraging standard libraries like `collections` and `heapq`.
+* **Complexity Analysis:** Analyzing Time & Space Complexities (O(N), \(O(\log N)\), etc.) for every problem.
+* **Continuous Growth:** Consistently expanding into advanced algorithmic strategies.
