@@ -48,10 +48,14 @@ Daily collection of Data Structures & Algorithms problems solved in Python. This
 │   
 └── README.md
 
+---
+
 ## 🚀 How to RunClone the repository and run any problem script directly using Python:Bash# Clone repository
-   git clone - 
+   git clone - https://github.com/Arindam-18s/DSA-PRACTICE_Sessions.git
    # Navigate into the folder
       cd DSA-PRACTICE_Sessions
+
+---
 
    # Run a script
    python3 HashMaps / Hash_Maps.py
