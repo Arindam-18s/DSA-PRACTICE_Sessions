@@ -16,8 +16,8 @@ Daily collection of Data Structures & Algorithms problems solved in Python. This
 ## 🛠️ Topics Covered And To be Covered - 
 
 | Category | Topics / Techniques |
-| :--- | :---: | :--- |
-| **Arrays & Hashing**  | Two Pointers, Sliding Window, Prefix Sum, Hash Maps |
+| :--- | :--- |
+| **Arrays & Hashing** | Two Pointers, Sliding Window, Prefix Sum, Hash Maps |
 | **Strings** | Pattern Matching, String Manipulation, Anagrams |
 | **Linked Lists** | Singly/Doubly Linked Lists, Fast & Slow Pointers |
 | **Stacks & Queues** | Monotonic Stack, Priority Queues, Deque |
