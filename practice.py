@@ -1,40 +1,34 @@
-def permutations(open, close, n, current_perm, output):
-    if len(current_perm) == 2 * n:
-        output.append(current_perm)
-        return
-    if open < n:
-        permutations(open + 1, close, n, current_perm + "(", output)
-    if close < open:
-        permutations(open, close + 1, n, current_perm + ")", output)
-    return output
+# Topological Sort - A topological ordering is a linear ordering of the vertices 
+# such that for every directed edge u -> v, vertex u appears before vertex v in the ordering.
 
-
-# if __name__ == "__main__":
-#     n = 3
-#     # Output: ["((()))","(()())","(())()","()(())","()()()"]
-#     print(permutations(0, 0, n, "", []))
-
-
-def DFS(grid, i, j):
-    if ( i < 0 or i >= len(grid) or j < 0 or j >= len(grid[0]) or grid[i][j] == "0" ):  # 0 - Means Water Body
-        return  # Base Case
-    grid[i][j] = "0"  # Marking the cell as Visited By Making it a water Body
-    DFS(grid, i + 1, j)
-    DFS(grid, i - 1, j)
-    DFS(grid, i, j + 1)
-    DFS(grid, i, j - 1)
-
-if __name__ == "__main__":  # Number of Islands
-    grid = [                            #     grid = [
-        ["1", "1", "0", "0", "0"],      #               ["| Visited", "Visited |",     "~"     ,     "~"     ,     "~"     ],  
-        ["1", "1", "0", "0", "0"],      #               ["| Visited", "Visited |",     "~"     ,     "~"     ,     "~"     ],
-        ["0", "0", "1", "0", "0"],      #               [     "~"   ,     "~"    ,"| Visited |",     "~"     ,     "~"     ],
-        ["0", "0", "0", "1", "1"],      #               [     "~"   ,     "~"    ,     "~"     , "| Visited" , "Visited |" ],
-    ]
-    count = 0  # Tracks the no. of islands
-    for i in range(len(grid)):
-        for j in range(len(grid[0])):
-            if grid[i][j] == "1":
-                DFS(grid, i, j)
-                count += 1
-    print(count)
+from collections import deque
+class Solution:
+    def topoSort(self, V: int, edges: list[list[int]]) -> list[int]:
+        # Code here
+        inDegree = [0] * V
+        adj_list = [[] for _ in range(V)]
+        for u, v in edges:
+            adj_list[u].append(v)
+            
+        for i in range(V):
+            for neighbour in adj_list[i]:
+                inDegree[neighbour] += 1
+                
+        Q = deque()
+        for j in range(V):
+            if inDegree[j] == 0:
+                Q.append(j)
+        
+        TopoSort = []
+        while Q:
+            current_node = Q.popleft()
+            TopoSort.append(current_node)
+            
+            for neighbour in adj_list[current_node]:
+                inDegree[neighbour] -= 1
+                if inDegree[neighbour] == 0:
+                    Q.append(neighbour)
+            
+        return TopoSort
+                
+                

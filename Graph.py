@@ -217,15 +217,37 @@ if __name__ == "__main__":  # Number of Islands
     print(count)
 
 # ---------------------------------------------------------------------------------------------------
+# Detecting Cycle in Directed Graph - Using DFS
 
+class Solution:
+    def detect_cycle_dfs(self, source_node, adj_list, visited, path_visited):
+        visited[source_node] = 1
+        path_visited[source_node] = 1
+        for neighbour in adj_list[source_node]:
+            # If the node Ain't Visited
+            if visited[neighbour] == -1:
+                if self.detect_cycle_dfs(neighbour, adj_list, visited, path_visited):
+                    return True
+            # If the node Has been Previously Visited
+            # But it has to be visitec on the same path
+            elif path_visited[neighbour] == 1:
+                return True
+        path_visited[source_node] = -1  # Backtrack and make the Path Unvisited AGAIN
+        return False
 
+    def isCyclic(self, V: int, edges: list[list[int]]) -> bool:
+        # Build adjacency list from edges -- V = 4, edges[][] = [[0, 1], [1, 2], [2, 0], [2, 3]]
+        adj_list = [[] for _ in range(V)]
+        for u, v in edges:
+            adj_list[u].append(v)
 
-
-
-
-
-
-
+        visited = [-1] * (V)
+        path_visited = [-1] * (V)
+        for i in range(V):
+            if visited[i] == -1:
+                if self.detect_cycle_dfs(i, adj_list, visited, path_visited):
+                    return True
+        return False
 
 # ---------------------------------------------------------------------------------------------------
 

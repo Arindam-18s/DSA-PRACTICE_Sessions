@@ -2696,3 +2696,42 @@ if __name__ == "__main__":
     print(permutations(0, 0, n, "", []))
 
 #---------------------------------------------------------------------------------------------------
+# 32. Longest Valid Parentheses - Time - O(N), Space - O(N)
+
+s = "())((()))()))(((())))"
+# s = "()(())"
+# s = "()(()"
+max_valid = 0
+stack = [-1]  # Initialize with -1 as base
+
+for i, char in enumerate(s):
+    if char == "(":
+        stack.append(i)
+        print("incoming ( brace ", stack)
+    elif char == ")":
+        stack.pop()
+        if not stack:
+            # No matching '(' for this ')'
+            print("No matching '(' for this ')'", i)
+            stack.append(i)
+        else:
+            # Valid substring found
+            current_valid = i - stack[-1]
+            print(f"current valid : {i} - {stack[-1]} : ", current_valid)
+            max_valid = max(max_valid, current_valid)
+
+print(f"max valid parenthesis string size is : {max_valid}")
+#---------------------------------------------------------------------------------------------------
+# 136. Single Number - Given a non-empty array of integers nums, every element appears twice except for one. 
+                     # Find that single one. - Constant Space, and linear Time
+
+nums = [4,1,2,1,2]
+
+freq = {}
+for n in nums:
+    if n not in freq:
+        freq[n] = 1
+    elif n in freq:
+        del freq[n]
+print(next(iter(freq)))
+#---------------------------------------------------------------------------------------------------
