@@ -2734,4 +2734,37 @@ for n in nums:
     elif n in freq:
         del freq[n]
 print(next(iter(freq)))
+
 #---------------------------------------------------------------------------------------------------
+# 921. Return the minimum number of moves required to make s valid. -- s = "()))(("  Output - 4
+                    # Time - O(n), Space - O(1)
+s = "()))(("
+stack = [0]
+count = 0
+for i in range(len(s)):
+    if s[i] == "(":
+        stack[0] += 1
+    else:
+        if stack[0] > 0:
+            stack[0] -= 1
+        else:
+            count += 1
+if stack:
+    count += stack[0]
+print(count)
+
+#---------------------------------------------------------------------------------------------------
+# 223 - Given the coordinates of two rectilinear rectangles in a 2D plane, return the total area covered by the two rectangles.
+
+class Solution:
+    def computeArea(self, ax1: int, ay1: int, ax2: int, ay2: int, bx1: int, by1: int, bx2: int, by2: int) -> int:
+        # 1. Calculate individual areas of both rectangles
+        area_a = (ax2 - ax1) * (ay2 - ay1)
+        area_b = (bx2 - bx1) * (by2 - by1)
+        
+        # 2. Calculate the dimensions of the overlapping region
+        overlap_width = max(0, min(ax2, bx2) - max(ax1, bx1))
+        overlap_height = max(0, min(ay2, by2) - max(ay1, by1))
+        
+        # 3. Total area is the sum of both minus the shared overlap
+        return area_a + area_b - (overlap_width * overlap_height)
