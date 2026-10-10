@@ -1,50 +1,39 @@
-# # Topological Sort - A topological ordering is a linear ordering of the vertices
-# # such that for every directed edge u -> v, vertex u appears before vertex v in the ordering.
+# s = "))())("
 
-# from collections import deque
-# class Solution:
-#     def topoSort(self, V: int, edges: list[list[int]]) -> list[int]:
-#         # Code here
-#         inDegree = [0] * V
-#         adj_list = [[] for _ in range(V)]
-#         for u, v in edges:
-#             adj_list[u].append(v)
+# map = {"left_parenthesis": 0, "right_parenthesis": 0}
+# i = 0
+# while i < len(s):
+#     if s[i] == "(":
+#         map["left_parenthesis"] += 1
+#         print(f"left ( at pos - {i}")
+#         i += 1
+#     elif s[i] == ")":
+#         print(f"right ) at pos - {i}")
+#         if map["left_parenthesis"] > 0:
+#             if s[i + 1]:
+#                 if s[i + 1] == ")":
+#                     map["left_parenthesis"] -= 1
+#                     i += 1
+#             else:
+#                 map["right_parenthesis"] += 1
+#         else:
+#             map["right_parenthesis"] += 1
+#         i += 1
+# print("( : ", map["left_parenthesis"], ",  ) : ", map["right_parenthesis"])
 
-#         for i in range(V):
-#             for neighbour in adj_list[i]:
-#                 inDegree[neighbour] += 1
 
-#         Q = deque()
-#         for j in range(V):
-#             if inDegree[j] == 0:
-#                 Q.append(j)
+s = "))())("
 
-#         TopoSort = []
-#         while Q:
-#             current_node = Q.popleft()
-#             TopoSort.append(current_node)
-
-#             for neighbour in adj_list[current_node]:
-#                 inDegree[neighbour] -= 1
-#                 if inDegree[neighbour] == 0:
-#                     Q.append(neighbour)
-
-#         return TopoSort
-
-s = "()))(("
-
-stack = [0]
-count = 0
-for i  in range(len(s)):
+i = 0
+j = 1
+minimum = 0
+while j < len(s):
     if s[i] == "(":
-        stack[0] += 1
-    else:
-        if stack[0] > 0:
-            stack[0] -= 1
-        else:
-            count += 1
-
-if stack:
-    count += stack[0]
-
-print(count)
+        if s[j] == ")":
+            if s[j + 1] == ")":
+                i += 3
+                j += 3
+        elif s[j] == "(":
+            minimum += 1
+        
+    elif s[i] == "("

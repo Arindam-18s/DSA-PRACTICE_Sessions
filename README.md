@@ -44,7 +44,8 @@ Daily collection of Data Structures & Algorithms problems solved in Python. This
 │   ├── Graph.py
 ├── Backtracking and Recursion/
 │   └── Recursion.py
-├── Dynamic_Programming/  <-- (Current Focus)
+├── Dynamic_Programming/
+│   └── Dynamic_Programming.py  <-- (Current Focus)
 │   
 └── README.md
 ```
