@@ -2818,7 +2818,28 @@ class Solution:
         return n == 1
     
 #---------------------------------------------------------------------------------------------------
+# 1911. Maximum Alternating Subsequence Sum - space-optimized Dynamic Programming (DP) - Time - 0(n), Space - 0(1)
 
+class Solution:
+    def maxAlternatingSum(self, nums: List[int]) -> int:
+        odd = even = 0
+        for num in nums:
+            even = max(even, odd + num)
+            odd = max(odd, even - num)
+        return even
+
+#---------------------------------------------------------------------------------------------------
+# 122. Best Time to Buy and Sell Stock II - space-optimized Dynamic Programming (DP) - Time - 0(n), Space - 0(1)
+class Solution:
+    def maxProfit(self, prices: list[int]) -> int:
+        even = 0
+        odd = float('-inf')
+        for num in prices:
+            even = max(even, odd + num)
+            odd = max(odd, even - num)
+        return even
+
+#---------------------------------------------------------------------------------------------------
 
 
 
