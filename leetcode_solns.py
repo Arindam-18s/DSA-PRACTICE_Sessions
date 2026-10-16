@@ -87,6 +87,7 @@ for char in char_list:
         answer.append(char)
 
 print(final_ans)
+
 # -------------------------------------------------    
 # Reverse Integer
 
@@ -99,6 +100,7 @@ class Solution(object):
             return int(str(x)[::-1])
         else:
             return -int(str(abs(x))[::-1])      # For negative numbers, slice the absolute value and add the minus back
+
 # -------------------------------------------------    
 # 206. Reverse Linked List      
 
@@ -114,6 +116,7 @@ class Solution(object):
             cur = temp
 
         return prev
+
 # ------------------------------------------------- 
 # Leetcode - 242. Valid Anagram   
 
@@ -178,6 +181,7 @@ class Solution(object):
         while b:
             a, b = b, a % b
         return a
+
 # ------------------------------------------------- 
 #  896. Monotonic Array - O(n) soln
 
@@ -218,6 +222,7 @@ while ( n > 0) :
 
 mul = sum * x
 print(mul)
+
 # ------------------------------------------------- 
 # 66. Plus One <- Input: digits = [9] Output: [1,0] | Input: digits = [4,3,2,1] Output: [4,3,2,2]
 
@@ -232,6 +237,7 @@ class Solution(object):
             digits[i] = 0               # If it is a 9, change it to 0 and continue the loop
             
         return [1] + digits       # If the loop finishes, all digits were 9s (e.g., [9, 9] ->) We must add a 1 at the front
+
 # ------------------------------------------------- 
 # 238. Product of Array Except Self
 
@@ -254,6 +260,7 @@ class Solution(object):
         for i in range(len(L_array)):
             result.append(L_array[i]*R_array[i])
         return result
+
 # ------------------------------------------------- 
 # 121. Best Time to Buy and Sell Stock
 
@@ -271,6 +278,7 @@ class Solution(object):
             if profit > max_profit:
                 max_profit = profit
         return max_profit
+
 #------------------------------------------------- 
 # 2. Add Two Numbers
 class ListNode(object):
@@ -319,6 +327,7 @@ class Solution:
 
         dfs(0)
         return result
+
 # ------------------------------------------------- 
 # 3536. Maximum Product of Two Digits 
 
@@ -357,8 +366,8 @@ for num in nums:
         min1 = num
     elif num < min2:
         min2 = num
-
 print(max(max1 * max2 * max3,max1 * min1 * min2))
+
 # ------------------------------------------------- 
 # 100. Same Tree
 
@@ -381,6 +390,7 @@ class Solution:
             
         # Recursively check left and right subtrees
         return self.isSameTree(p.left, q.left) and self.isSameTree(p.right, q.right)
+
 # ------------------------------------------------- 
 # 42. Trapping Rain Water  
  
@@ -408,7 +418,6 @@ class Solution:
 # ------------------------------------------------- 
 # 102. Binary Tree Level Order Traversal
 
-from collections import deque
 class TreeNode:
     def __init__(self, val=0, left=None, right=None):
         self.val = val
@@ -483,6 +492,7 @@ class Solution:
 
 # ------------------------------------------------- 
 # prime using recursion
+
 def is_prime(n,i):      # is_prime(n, m-1)
     if i == 1:
         return True
@@ -496,8 +506,10 @@ if prime is True:
     print("prime")
 else:
     print("not prime")
+
 # ------------------------------------------------- 
 # fibonacci
+
 def fibonacci(num):
     if num == 0:
         return False
@@ -516,8 +528,10 @@ def fibonacci(num):
     
 arr = fibonacci(20)
 print(arr)
+
 # ------------------------------------------------- 
 #leaders in an array
+
 nums = [7, 10, 4, 10, 6, 5, 2]
 ans = []
 max = 0
@@ -530,6 +544,7 @@ for n in range(len(nums) - 1, -1, -1):
 
 ans.reverse()
 print(ans)
+
 # ------------------------------------------------- 
 # 34. Find First and Last Position of Element in Sorted Array - must be O(log n) runtime complexity.- Use Binary Search
 
@@ -619,9 +634,9 @@ class Solution:
         return longest
 
 nums = [100,4,200,1,3,2]
-sol = Solution()
-ans = sol.longestConsecutive(nums)
-print(ans)
+# sol = Solution()
+# ans = sol.longestConsecutive(nums)
+# print(ans)
 
 # ------------------------------------------------- 
 # 20. Valid Parentheses
@@ -749,6 +764,7 @@ class Solution:
             else:
                 stack.append(c)
         return "".join(stack)
+
 # ------------------------------------------------- 
 # printing prime till N - using the sieve of Eratosthenes - O(N log log N) which is < normal methods O(N x sqrt(N))
 
@@ -765,6 +781,7 @@ def sieve_of_eratosthenes(n):
     return [i for i in range(2, n + 1) if prime[i]]
 
 print(sieve_of_eratosthenes(30))   # Output: [2, 3, 5, 7, 11, 13, 17, 19, 23, 29]
+
 # ------------------------------------------------- 
 # 3731. Find Missing Elements
 
@@ -781,6 +798,7 @@ for n in hashh:
     if n not in nums:
         ans.append(n)
 print(ans)
+
 # ------------------------------------------------- 
 # leetcode - 1636 - Sort array by increasing frquency
 
@@ -794,6 +812,7 @@ def custom_sort(n):
 
 nums.sort(key = custom_sort)
 print(nums)
+
 # ------------------------------------------------- 
 # 198. House Robber
 
@@ -808,6 +827,7 @@ class Solution:
             rob2 = temp
             
         return rob2
+
 # ------------------------------------------------- 
 # leetcode - 3345. Smallest Divisible Digit Product I
 
@@ -829,6 +849,7 @@ def check(n, t):
             n +=1
 
 print(check(n, t))
+
 # ------------------------------------------------- 
 # 53. Maximum Subarray - nums = [-2,1,-3,4,-1,2,1,-5,4] - o/p -> ([4, -1, 2, 1], 6)
 
@@ -854,6 +875,7 @@ def subarr(nums: List[int]):
     return best_ans, max_sum
         
 print(subarr(nums))
+
 # ------------------------------------------------- 
 # 191. Number of 1 Bits - Input: n = 128 / Output: 1 - The input binary string 10000000 has a total of one set bit.
 
@@ -864,6 +886,7 @@ class Solution:
             ans += 1
             n = n & (n-1)
         return ans
+
 # ------------------------------------------------- 
 # 338. Counting Bits - Input: n = 5Output: [0,1,1,2,1,2],Explanation: 0 --> 0 1 --> 1 2 --> 10 3 --> 11 4 --> 100 5 --> 101
 
@@ -881,6 +904,7 @@ def find(n:str)-> List[int]:
     return ans
 
 print(find("20"))
+
 # ------------------------------------------------- 
 # 268. Missing Number - Input: nums = [9,6,4,2,3,5,7,0,1] Output: 8
 
@@ -1144,8 +1168,10 @@ elif has_nonZero:
     print(k - 1)
 else:
     print(0)
+
 # ------------------------------------------------- 
 # 560. Subarray Sum Equals K / prefix sum implementation
+
 class Solution:
     def subarraySum(self, nums: List[int], k: int) -> int:
         res = 0 
@@ -1189,6 +1215,7 @@ while(l <= r):
         r = middle - 1
     else:
         l = middle + 1
+
 # ------------------------------------------------- 
 # 33. Search in Rotated Sorted Array - Binary Search
 
@@ -1211,6 +1238,7 @@ while(l <= r):
         else:
             r = middle - 1
 print(-1)
+
 # ------------------------------------------------- 
 # 34. Find First and Last Position of Element in Sorted Array  -- Input: nums = [5,7,7,8,8,10], target = 8 Output: [3,4]
 
@@ -1247,6 +1275,7 @@ while(l <= r):
 
 print(first_occ, num)
 print(last_occ, num)
+
 # ------------------------------------------------- 
 # 852. Peak Index in a Mountain Array  -  Input: arr = [0,2,1,0] Output: 1
 
@@ -1333,6 +1362,7 @@ sol = Solution()
 
 # 4. Call the method
 rotated_head = sol.rotateRight(head, k=2)
+
 #---------------------------------------------------------------------------------------------------
 # 141. Linked List Cycle
 
@@ -1745,6 +1775,7 @@ for r in range(len(s)):
     max_substring = max(max_substring, current_substr_len)
 
 print(max_substring)
+
 #---------------------------------------------------------------------------------------------------
 # 2091. Removing Minimum and Maximum From Array - with the fewest steps possible
 
@@ -1976,6 +2007,7 @@ def evaluate_postfix_space(expression: str) -> float:
 # --- Test Cases ---
 print(evaluate_postfix_space("12 3 /"))       # Output: 4.0
 print(evaluate_postfix_space("100   25 / 5 +")) # Output: 9.0 (Handles extra spaces perfectly!)
+
 #---------------------------------------------------------------------------------------------------
 # 3870. Count Commas in Range - Return the total number of commas used when writing all integers from [1, n]
                     #For 1 Millon -> 999001
@@ -2027,6 +2059,7 @@ rev_str = " ".join(arr1[::-1])
 
 print(arr1)
 print(rev_str)
+
 #---------------------------------------------------------------------------------------------------
 # 46. Permutations
 
@@ -2062,6 +2095,7 @@ def permutation_string(current_string_permutation, output):
 if __name__ == "__main__":
     string = "abcde"        # For Strings
     print(permutation_string([], []))
+
 #---------------------------------------------------------------------------------------------------
 # 39. Combination Sum - Input: candidates = [2,3,6,7], target = 7 - Output: [[2,2,3],[7]] Tcol - 2^t x k  Scol - Unpredictable
 
@@ -2200,7 +2234,6 @@ class Solution:
 # 3483. Unique 3-Digit Even Numbers - Input: digits = [1,2,3,4] Output: 12 - ** SAME TO SAME PERMUTATION Problem **
 # The 12 distinct 3-digit even numbers that can be formed are 124, 132, 134, 142, 214, 234, 312, 314, 324, 342, 412, and 432. 
                                                 # Note that 222 cannot be formed because there is only 1 copy of the digit 2.
-
 class Solution:
     def subseq_with_no_leading_zeroes(self, digits, current_subseq, ans, used):
         if len(current_subseq) == 3:
@@ -2721,6 +2754,7 @@ for i, char in enumerate(s):
             max_valid = max(max_valid, current_valid)
 
 print(f"max valid parenthesis string size is : {max_valid}")
+
 #---------------------------------------------------------------------------------------------------
 # 136. Single Number - Given a non-empty array of integers nums, every element appears twice except for one. 
                      # Find that single one. - Constant Space, and linear Time
@@ -2840,8 +2874,152 @@ class Solution:
         return even
 
 #---------------------------------------------------------------------------------------------------
+# 62. Unique Paths - There is a robot on an m x n grid. The robot is initially located at the top-left corner (i.e., grid[0][0]). 
+                   # The robot tries to move to the bottom-right corner (i.e., grid[m - 1][n - 1]). The robot can only move 
+                   # either down or right at any point in time. Given the two integers m and n, return the number of possible 
+                   # unique paths that the robot can take to reach the bottom-right corner.
+# -- Recursive Soln.
+                    #Tc -> O(2 ^ (n + m))   |   Sc -> O((n - 1)+(m - 1)) - ***Gets TLE 100%***
+class Solution:
+    def recursion(self, i, j):
+        if i == 0 and j == 0:
+            return 1
+        if i < 0 or j < 0:
+            return 0
+        up = self.recursion(i - 1, j)
+        left = self.recursion(i, j - 1)
+        return up + left
+    def uniquePaths(self, m: int, n: int) -> int:
+        return self.recursion(m - 1, n - 1)
+    
+# -- Dynamic Programming Memoization Soln .
+                    #Tc -> O(n x m)   |   Sc -> O((n - 1)+(m - 1)) + O(n x m)
+class Solution:
+    def recursion(self, i, j, dp):
+        if i == 0 and j == 0:
+            return 1
+        if i < 0 or j < 0:
+            return 0
+        if dp[i][j] != -1:
+            return dp[i][j]
+        up = self.recursion(i - 1, j, dp)
+        left = self.recursion(i, j - 1, dp)
+        dp[i][j] = up + left
+        return dp[i][j]
+    def uniquePaths(self, m: int, n: int) -> int:
+        dp = [[-1 for _ in range(n)] for _ in range(m)]
+        return self.recursion(m - 1, n - 1, dp)
 
+# -- Dynamic Programming Tabulation Soln .
+                    #Tc -> O(n x m)   |   Sc -> O(n x m)
+class Solution:
+    def uniquePaths(self, m: int, n: int) -> int:
+        dp = [[0 for i in range(n)]for j in range(m)]
+        for i in range(m):
+            for j in range(n):
+                if i == 0 and j == 0:
+                    dp[i][j] = 1
+                    continue
+                up = 0
+                left = 0
+                if i > 0:
+                    up = dp[i - 1][j]
+                if j > 0:
+                    left = dp[i][j - 1]
+                dp[i][j] = up + left
+        return dp[m - 1][n - 1]
 
+# --------------------------------------------------------------------------------------------------
+# 63. Unique Paths II - Given an m x n integer array grid. There is a robot initially located at the top-left corner
+                      # and tries to move to the bottom-right corner - An obstacle and space are marked as 1 or 0 
+                      # in grid. A path that the robot takes cannot include any obstacle.
+                      # Return the number of possible --unique paths--
+
+class Solution:       # -- Dynamic Programming Memoization Soln .
+    def rec(self, i, j, obstacleGrid, dp):
+        if i < 0 or j < 0 or obstacleGrid[i][j] == 1:
+            return 0
+        if i == 0 and j == 0:
+            return 1
+        if dp[i][j] != -1:
+            return dp[i][j]
+        up = self.rec(i - 1, j, obstacleGrid, dp)
+        left = self.rec(i, j - 1, obstacleGrid, dp)
+        dp[i][j] = up + left
+        return dp[i][j]
+    
+    def uniquePathsWithObstacles(self, obstacleGrid: list[list[int]]) -> int:
+        n, m = len(obstacleGrid), len(obstacleGrid[0])
+        if obstacleGrid[0][0] == 1 or obstacleGrid[n - 1][m - 1] == 1:
+            return 0
+        dp = [[-1 for _ in range(m)] for _ in range(n)]
+        return self.rec(n - 1, m - 1, obstacleGrid, dp)
+
+# -- Dynamic Programming Tabulation Soln .
+class Solution: 
+    def uniquePathsWithObstacles(self, obstacleGrid: list[list[int]]) -> int:
+        n, m = len(obstacleGrid), len(obstacleGrid[0])
+        dp = [[-1 for _ in range(m)]for _ in range(n)]
+        for i in range(n):
+            for j in range(m):
+                if obstacleGrid[i][j] == 1:
+                    dp[i][j] = 0
+                elif i == 0 and j == 0:
+                    dp[i][j] = 1
+                else:
+                    up = 0
+                    left = 0
+                    if i > 0:
+                        up = dp[i - 1][j]
+                    if j > 0:
+                        left = dp[i][j - 1]
+                    dp[i][j] = up + left
+        return dp[n - 1][m - 1]
+
+# --------------------------------------------------------------------------------------------------
+# 64. Minimum Path Sum - Given a m x n grid filled with non-negative numbers, find a path from top left to bottom right,
+                                                                # which minimizes the sum of all numbers along its path.
+# -- Dynamic Programming Memoization Soln .
+class Solution:                           #Tc -> O(n x m)   |   Sc -> O((n - 1)+(m - 1)) + O(n x m)
+    def rec(self, i, j, grid, dp):
+        if i == 0 and j == 0:
+            return grid[i][j]
+        if i < 0 or j < 0:
+            return float('inf')
+        if dp[i][j] != -1:
+            return dp[i][j]
+        up = grid[i][j] + self.rec(i - 1, j, grid, dp)
+        left = grid[i][j] + self.rec(i, j - 1, grid, dp)
+        dp[i][j] = min(up, left)
+        return dp[i][j]
+    
+    def minPathSum(self, grid: list[list[int]]) -> int:
+        if not grid:
+            return 0
+        n, m = len(grid), len(grid[0])
+        dp = [[-1 for _ in range(m)]for _ in range(n)]
+        return self.rec(n - 1, m - 1, grid, dp)
+
+# -- Dynamic Programming Tabulation Soln .
+class Solution:                           #Tc -> O(n x m)   |   Sc -> O(n x m)
+    def minPathSum(self, grid: list[list[int]]) -> int:
+        if not grid:
+            return 0
+        n, m = len(grid), len(grid[0])
+        dp = [[-1 for _ in range(m)] for _ in range(n)]
+        for i in range(n):
+            for j in range(m):
+                if i == 0 and j == 0:
+                    dp[i][j] = grid[0][0]
+                else:
+                    up = dp[i - 1][j] if i > 0 else float('inf')
+                    left = dp[i][j - 1] if j > 0 else float('inf')
+                    
+                    # Minimum of the two incoming paths + current cell cost
+                    dp[i][j] = grid[i][j] + min(up, left)
+        return dp[n - 1][m - 1]
+                
+# --------------------------------------------------------------------------------------------------
 
 
 
