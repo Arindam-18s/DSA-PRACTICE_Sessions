@@ -3020,7 +3020,147 @@ class Solution:                           #Tc -> O(n x m)   |   Sc -> O(n x m)
         return dp[n - 1][m - 1]
                 
 # --------------------------------------------------------------------------------------------------
+# 3551. Minimum Swaps to Sort by Digit Sum - given an array nums of distinct positive integers. need to sort the array
+                                            #in increasing order based on the sum of the digits of each number.
+class Solution:                           #Return the minimum number of swaps required to rearrange nums into this sorted order
+    def digit_sum(self, num):
+        sum = 0
+        while num != 0:                         # nums = [18,43,34,16] | Digit Sum - [9, 7, 7, 7] | Output: 2(swaps needed)
+            digit = num % 10
+            sum += digit
+            num = num // 10
+        return sum
 
+    def minSwaps(self, nums: List[int]) -> int:
+        if not nums:
+            return 0
+        digit_summed_arr = []
+        for num in nums:
+            digit_summed_arr.append(self.digit_sum(num))
+        
+        sorted_indices = list(range(len(nums)))      # Create a list of indices [0, 1, 2, ..., n-1]
+        sorted_indices.sort(key=lambda x: (digit_summed_arr[x], nums[x]))  
+        
+        visited = [False] * len(nums)
+        swaps = 0
+        for i in range(len(nums)):
+            if visited[i] or sorted_indices[i] == i:
+                continue
+            cycle_size = 0
+            j = i
+            while not visited[j]:
+                visited[j] = True
+                j = sorted_indices[j]   # Move to the index this element belongs to
+                cycle_size += 1
+            if cycle_size > 0:
+                swaps += (cycle_size - 1)
+        return swaps
+
+# --------------------------------------------------------------------------------------------------
+# 120. Triangle --- Given a triangle array, return the minimum path sum from top to bottom.
+                    # EX - Input: triangle = [[2],[3,4],[6,5,7],[4,1,8,3]]  - Output: 11
+                    # -- Dynamic Programming Memoization Soln. Tcol -> O(n x n)  |  Scol -> O(n x n) + O(n)
+class Solution:     
+    def rec(self, i, j, triangle, dp):
+        if i == (len(triangle) - 1):                                               #    2
+            return triangle[len(triangle) - 1][j]                                  #   3 4
+        if dp[i][j] is not None:                                                   #  6 5 7
+            return dp[i][j]                                                        # 4 1 8 3
+        down = triangle[i][j] + self.rec(i + 1, j, triangle, dp)
+        diagonal = triangle[i][j] + self.rec(i + 1, j + 1, triangle, dp)
+        dp[i][j] = min(down, diagonal)
+        return dp[i][j]
+    
+    def minimumTotal(self, triangle: list[list[int]]) -> int:
+        if not triangle:
+            return 0
+        n = len(triangle)
+        dp = [[None for _ in range(n)]for _ in range(n)]
+        return self.rec(0, 0, triangle, dp)
+
+class Solution:      # -- Dynamic Programming Tabukation Soln. Tcol -> O(n x n)  |  Scol -> O(n x n)
+    def minimumTotal(self, triangle: list[list[int]]) -> int:
+        n = len(triangle)
+        dp = [[-1 for _ in range(n)]for _ in range(n)]
+
+        # Fill the bottom row of dp with the actual bottom row of the triangle
+        for j in range(n):
+            dp[n - 1][j] = triangle[n - 1][j]
+
+        for i in range(n - 2, -1, -1):
+            for j in range(i, -1 , -1):
+                down = triangle[i][j] + dp[i + 1][j]
+                diagonal = triangle[i][j] + dp[i + 1][j + 1]
+                dp[i][j] = min(down,diagonal)
+        return dp[0][0]
+        
+# --------------------------------------------------------------------------------------------------
+# 537. Complex Number Multiplication - A complex number can be represented as "a + bi" a = real, b = imaginary
+                # Tcol -> O(1), Scol -> O(1)
+class Solution:
+    def complexNumberMultiply(self, num1: str, num2: str) -> str:
+        def parse_complex(s):
+            parts = s.split("+")
+            real = int(parts[0]) 
+            imag = int(parts[1][:-1])
+            return real, imag
+
+        a, b = parse_complex(num1)
+        c, d = parse_complex(num2)
+        real = a * c - b * d
+        imag = a * d + b * c
+        return str(real) + "+" + str(imag) + "i"
+
+# --------------------------------------------------------------------------------------------------
+# 931. - Minimum Falling Path Sum - Given an n x n array of integers matrix, 
+                                     # return the minimum sum of any falling path through matrix.
+# -- Dynamic Programming Memoization Soln. Tcol -> O(n x n)  |  Scol -> O(n x n) + O(n) 
+class Solution:
+    def rec(self, i, j, matrix, dp):
+        if j < 0 or j >= len(matrix[0]):
+            return float('inf')
+        if i == 0:
+            return matrix[0][j]
+        if dp[i][j] != float('inf'):
+            return dp[i][j]
+        
+        up = matrix[i][j] + self.rec(i - 1, j, matrix, dp)
+        left_diagonal = matrix[i][j] + self.rec(i - 1, j - 1, matrix, dp)
+        right_diagonal = matrix[i][j] + self.rec(i - 1, j + 1, matrix, dp)
+        dp[i][j] = min(up, left_diagonal, right_diagonal)
+        return dp[i][j]    
+        
+    def minFallingPathSum(self, matrix: list[list[int]]) -> int:
+        n, m = len(matrix), len(matrix[0])
+        dp = [[float('inf') for _ in range(m)]for _ in range(n)]
+        minimum_sum = float('inf')
+        for j in range(m):
+            minimum_sum = min(minimum_sum, self.rec(n - 1, j, matrix, dp))
+        return minimum_sum
+
+# -- Dynamic Programming Tabulation Soln. Tcol -> O(n x n) + O(n) |  Scol -> O(n x n)
+    def minFallingPathSum_using_Tabulation(self, matrix: list[list[int]]) -> int:
+        n, m = len(matrix), len(matrix[0])
+        dp = [[float('inf') for _ in range(m)]for _ in range(n)]
+        for j in range(m):
+            dp[0][j] = matrix[0][j]
+        
+        for i in range(1, n):
+            for j in range(m):
+                up = matrix[i][j] + dp[i - 1][j]
+                left_diagonal = float('inf')
+                if j - 1 >= 0:
+                    left_diagonal = matrix[i][j] + dp[i - 1][j - 1]
+                right_diagonal = float('inf')
+                if j + 1 < m:
+                    right_diagonal = matrix[i][j] + dp[i - 1][j + 1]
+                dp[i][j] = min(up, left_diagonal, right_diagonal)
+        minimum_sum = float('inf')
+        for j in range(m):
+            minimum_sum = min(minimum_sum, dp[n - 1][j])
+        return minimum_sum
+
+# --------------------------------------------------------------------------------------------------
 
 
 
