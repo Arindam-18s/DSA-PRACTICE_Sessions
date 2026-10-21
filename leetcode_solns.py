@@ -3161,7 +3161,57 @@ class Solution:
         return minimum_sum
 
 # --------------------------------------------------------------------------------------------------
+# 564. Find the Closest Palindrome - Given a string n representing an integer, 
+# return the closest integer (not including itself), which is a palindrome. If there is a tie, return the smaller one.
 
+class Solution:      # Tcol -> O(1), Scol-> O(1) |  n is representing an integer in the range [1, 1018 - 1].
+    def nearestPalindromic(self, n: str) -> str:
+        length = len(n)
+        N = int(n)
+        # Edge cases: e.g., 100 -> 99, 999 -> 1001
+        candidates = { 10**(length - 1) - 1, 10**length + 1} 
+        # Take the prefix (first half of the string)
+        prefix = int(n[:(length + 1) // 2])
+        # Try prefix - 1, prefix, and prefix + 1
+        for p in (prefix - 1, prefix, prefix + 1):
+            p_str = str(p)
+            # Create a palindrome by mirroring the prefix
+            if length % 2 == 0:
+                pal = int(p_str + p_str[::-1])
+            else:
+                pal = int(p_str + p_str[:-1][::-1])
+            # The problem requires a DIFFERENT palindrome
+            if pal != N:
+                candidates.add(pal)
+        
+        # Find the candidate with the minimum absolute difference.
+        # Tie-breaker: choose the smaller palindrome value. # min(iterable, key=function)
+        best = min(candidates, key=lambda x: (abs(x - N), x))
+        
+        return str(best)
+
+# --------------------------------------------------------------------------------------------------
+# 3863. Minimum Operations to Sort a String - In one operation, you can select any substring of s 
+      # that is not the entire string and sort it in non-descending alphabetical order. Return the minimum number of operations 
+      # required to make s sorted in non-descending order. If it is not possible, return -1.
+
+class Solution:             # Tcol - O(NlogN), Scol - O(N)
+    def minOperations(self, s: str) -> int:
+        minChar, maxChar = min(s), max(s)
+        if sorted(s) == list(s):
+            return 0
+        elif len(s) == 2:
+            return -1
+        elif minChar == s[0] or maxChar == s[-1]:
+            return 1
+        # Check if the exact boundary characters are unique (frequency == 1) Check the middle segment (handles "card")
+        if any(c == minChar or c == maxChar for c in s[1:-1]):
+            return 2
+        # Tragic boundary state (handles "edc")
+        else:
+            return 3
+
+# --------------------------------------------------------------------------------------------------
 
 
 

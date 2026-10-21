@@ -1,101 +1,49 @@
-# PROBLEM - Maximum Falling Path Sum - Given an n x n array of integers matrix, 
-                                     # return the maximum sum of any falling path through matrix.
-# -- Dynamic Programming Memoization Soln. Tcol -> O(n x n)  |  Scol -> O(n x n) + O(n) 
-class Solution:
-    def rec_memoization(self, i, j, Matrix_Array, dp):
-        if j < 0 or j >= len(Matrix_Array[0]):    # Out of bounds Base Case check using Matrix_Array width (m)
-            return float('-inf')
-        if i == 0:                          # Destination Base Case
-            return Matrix_Array[0][j]
-        if dp[i][j] != float('-inf'):
-            return dp[i][j]
+def subset_sum_equals_k(index, target, array):
+    if target == 0:
+        return True
+    if index < 0:
+        return False
+    if index == 0:
+        if array[index] == target:
+            return True
+    if dp[index][target] != -1:
+        return dp[target]
+    not_take = subset_sum_equals_k(index - 1, target, array)
+    take = False
+    if target >= array[index]:
+        not_take = subset_sum_equals_k(index - 1, target - array[index], array)
 
-        up = Matrix_Array[i][j] + self.rec_memoization(i - 1, j , Matrix_Array, dp)
-        left_diagonal = Matrix_Array[i][j] + self.rec_memoization(i - 1, j - 1, Matrix_Array, dp)
-        right_diagonal = Matrix_Array[i][j] + self.rec_memoization(i - 1, j + 1, Matrix_Array, dp)
-        dp[i][j] = max(up, left_diagonal, right_diagonal)
-        return dp[i][j]
+    dp[index][target] = take or not_take
+    return dp[index][target]
 
-    def maxFallingPathSum(self, Matrix_Array, n, m):
-        dp = [[float('-inf') for _ in range(m)]for _ in range(n)]
-        maximum_sum = float('-inf')
-        for j in range(m):
-            maximum_sum = max(maximum_sum, self.rec_memoization(n - 1, j, Matrix_Array, dp))
-        return maximum_sum
-
-# -- Dynamic Programming Tabulation Soln. Tcol -> O(n x n) + O(n) |  Scol -> O(n x n)
-    def maxFallingPathSum_using_Tabulation(self, Matrix_Array, n, m):
-        dp = [[float('-inf') for _ in range(m)]for _ in range(n)]
-        for j in range(m):
-            dp[0][j] = Matrix_Array[0][j]
-
-        for i in range(1, n):
-            for j in range(m):
-                up = Matrix_Array[i][j] + dp[i - 1][j]
-                left_diagonal = float('-inf')
-                if (j - 1) >= 0:
-                    left_diagonal = Matrix_Array[i][j] + dp[i - 1][j - 1]
-                right_diagonal = float('-inf')
-                if (j + 1) < m:
-                    right_diagonal = Matrix_Array[i][j] + dp[i - 1][j + 1]  
-                dp[i][j] = max(up, left_diagonal, right_diagonal)  
-
-        maximum_sum = dp[n - 1][0]
-        for j in range(m):
-            maximum_sum = max(maximum_sum, dp[n - 1][j])
-        return maximum_sum
-
-Matrix_Array = [[2,1,3],[6,5,4],[7,8,9]]
-n, m = len(Matrix_Array), len(Matrix_Array[0])
-sol = Solution()
-# print(sol.maxFallingPathSum(Matrix_Array, n, m))
-# print(sol.maxFallingPathSum_using_Tabulation(Matrix_Array, n, m))
+if __name__ == "__main__":
+    array = [1, 3, 2, 4]
+    k = 11
+    # Initialize a 2D list with -1 of size (n) x (k + 1)
+    # Rows represent the index (0 to n-1), Columns represent the target (0 to k)
+    dp = [[-1 for _ in range(k + 1)] for _ in range(len(array))]
+    print(subset_sum_equals_k(len(array) - 1, k, array))
 
 
-# 931. - Minimum Falling Path Sum - Given an n x n array of integers matrix, 
-                                     # return the minimum sum of any falling path through matrix.
-# -- Dynamic Programming Memoization Soln. Tcol -> O(n x n)  |  Scol -> O(n x n) + O(n) 
-class Solution:
-    def rec(self, i, j, matrix, dp):
-        if j < 0 or j >= len(matrix[0]):
-            return float('inf')
-        if i == 0:
-            return matrix[0][j]
-        if dp[i][j] != float('inf'):
-            return dp[i][j]
-        
-        up = matrix[i][j] + self.rec(i - 1, j, matrix, dp)
-        left_diagonal = matrix[i][j] + self.rec(i - 1, j - 1, matrix, dp)
-        right_diagonal = matrix[i][j] + self.rec(i - 1, j + 1, matrix, dp)
-        dp[i][j] = min(up, left_diagonal, right_diagonal)
-        return dp[i][j]    
-        
-    def minFallingPathSum(self, matrix: list[list[int]]) -> int:
-        n, m = len(matrix), len(matrix[0])
-        dp = [[float('inf') for _ in range(m)]for _ in range(n)]
-        minimum_sum = float('inf')
-        for j in range(m):
-            minimum_sum = min(minimum_sum, self.rec(n - 1, j, matrix, dp))
-        return minimum_sum
 
-# -- Dynamic Programming Tabulation Soln. Tcol -> O(n x n) + O(n) |  Scol -> O(n x n)
-    def minFallingPathSum_using_Tabulation(self, matrix: list[list[int]]) -> int:
-        n, m = len(matrix), len(matrix[0])
-        dp = [[float('inf') for _ in range(m)]for _ in range(n)]
-        for j in range(m):
-            dp[0][j] = matrix[0][j]
-        
-        for i in range(1, n):
-            for j in range(m):
-                up = matrix[i][j] + dp[i - 1][j]
-                left_diagonal = float('inf')
-                if j - 1 >= 0:
-                    left_diagonal = matrix[i][j] + dp[i - 1][j - 1]
-                right_diagonal = float('inf')
-                if j + 1 < m:
-                    right_diagonal = matrix[i][j] + dp[i - 1][j + 1]
-                dp[i][j] = min(up, left_diagonal, right_diagonal)
-        minimum_sum = float('inf')
-        for j in range(m):
-            minimum_sum = min(minimum_sum, dp[n - 1][j])
-        return minimum_sum
+if __name__ == "__main__":
+    array = [1, 3, 2, 4]
+    k = 5
+    dp = [[False for _ in range(k + 1)] for _ in range(len(array))]
+    for i in range(len(array)):
+        dp[i][0] = True
+    if array[0] <= k:
+        dp[0][array[0]] = True  
+
+    for index in range(1, len(array)):
+        for target in range(1, k + 1):
+            not_take = dp[index - 1][target]
+            take = False
+            if target >= array[index]:
+                take = dp[index - 1][target - array[index]]
+            dp[index][target] = take | not_take
+    print(dp[len(array) - 1][k])
+            
+
+
+    
