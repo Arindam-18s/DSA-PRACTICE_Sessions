@@ -3212,10 +3212,88 @@ class Solution:             # Tcol - O(NlogN), Scol - O(N)
             return 3
 
 # --------------------------------------------------------------------------------------------------
+# 4083. Minimum Deletions to Make Array Sharp - Find the minimum number of deletions needed to remove all adjacent 
+# duplicate elements from an array, so that no two neighboring numbers are equal.
+# (Note: Since x XOR y == 0 only when x == y, the condition a[i] XOR a[i + 1] != 0 simply means adjacent elements 
+                        # must be different.)
+nums = [4,4,9,4]                            # Time - O(N), Space - O(1)
+number_of_deletions = 0
+current = 0
+next_val = 1
+while next_val < len(nums):
+    if nums[current] ^ nums[next_val] == 0 or nums[current] ^ nums[next_val] < 0:
+        print(f"{current},{next_val}")
+        # nums.pop(current)
+        current = next_val
+        next_val += 1
+        number_of_deletions += 1
+    else:
+        current = next_val
+        next_val += 1
+    print(nums, current, next_val)
 
+print(number_of_deletions)
 
+# --------------------------------------------------------------------------------------------------
+# 4084. Last Visited Cell in a Directional Grid - Find the 0-based coordinates [r, c] of the last cell reached 
+# when starting at (0, 0) and following the directional instructions ('L', 'R', 'U', 'D') until the path goes out of bounds 
+# or attempts to revisit a cell.(Note: The move that would leave the grid or cause a revisit is aborted, 
+                                                # making the previous position the final stopping point.)
+class Solution:
+    def lastVisitedCell(self, grid: list[list[str]]) -> list[int]:
+        n, m  = len(grid), len(grid[0])         # Time - O(n * m), Space - O(1)
+        i = j = prev_i = prev_j = 0
 
+        while 0 <= i < n and 0 <= j < m:
+            if grid[i][j] == 'visited':
+                return [prev_i, prev_j]
 
+            dp = grid[i][j]
+            prev_i, prev_j = i, j
+            grid[i][j] = 'visited'
+            
+            if dp == 'L':
+                j -= 1
+            elif dp == 'R':
+                j += 1
+            elif dp == 'U':
+                i -= 1
+            elif dp == 'D':
+                i += 1
+        return [prev_i, prev_j]
+
+# --------------------------------------------------------------------------------------------------
+# 416. Partition Equal Subset Sum - Given an integer array nums, return true if you can partition the array 
+#           into two subsets such that the sum of the elements in both subsets is equal or false otherwise.
+                                        # ---*--- Dynamic Programming Tabulation Soln. ---*---       
+def subset_sum_eq_K_Tabulation(array, k):       # Tcol -> O(n x k)  |  Scol -> O(n x k)
+    dp = [[False for _ in range(k + 1)] for _ in range(len(array))]
+    for i in range(len(array)):       # Base case: a target sum of 0 is always possible (with an empty subset)
+        dp[i][0] = True
+    if array[0] <= k:                 # Base case: for the first element
+        dp[0][array[0]] = True
+
+    for index in range(1, len(array)):
+        for target in range(1, k + 1):
+            not_take = dp[index - 1][target]
+            take = False
+            if target >= array[index]:
+                take = dp[index - 1][target - array[index]]
+            dp[index][target] = take | not_take
+    return dp[len(array) - 1][k]
+
+if __name__ == "__main__":
+    array = [1, 5, 11, 5]
+    total_sum = sum(array)
+
+    if total_sum % 2 != 0:      # If the total sum is odd, we cannot partition it into two equal integer sums
+        print(False)
+    else:
+        target = total_sum // 2
+        print(subset_sum_eq_K_Tabulation(array, target))
+
+# --------------------------------------------------------------------------------------------------
+      
 
 
 
