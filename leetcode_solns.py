@@ -1200,7 +1200,36 @@ class NumArray:
         return rightPointer - leftPointer
 
 # ------------------------------------------------- 
- # 35. Search Insert Position - Binary Search
+# 2409. Count Days Spent Together - given 4 strings arriveAlice, leaveAlice, arriveBob, and leaveBob. - in the format "MM-DD"
+# Return the total number of days that Alice and Bob are in Rome together.
+# all dates occur in the same calendar year, number of days per month: [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+                                        # Prefix_Sum - Tcol -> O(1), Scol -> O(1)
+def calc_dayOfTheYear(date, prefixSum):
+    month = int(date[:2])
+    day = int(date[3:])
+    return prefixSum[month - 1] + day
+
+if __name__ == "__main__":
+    arriveAlice = "07-15"
+    leaveAlice = "09-18"
+    arriveBob = "08-16"
+    leaveBob = "08-19"
+
+    datesOfMonths = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+    prefixSum = [0]
+    for date in datesOfMonths:
+        prefixSum.append(prefixSum[-1] + date)
+    # print(prefixSum)
+
+    alice_arrival_date = calc_dayOfTheYear(arriveAlice, prefixSum)
+    alice_leave_date = calc_dayOfTheYear(leaveAlice, prefixSum)
+    bob_arrival_date = calc_dayOfTheYear(arriveBob, prefixSum)
+    bob_leave_date = calc_dayOfTheYear(leaveBob, prefixSum)
+
+    print(max(0, min(alice_leave_date, bob_leave_date) - max(alice_arrival_date, bob_arrival_date) + 1))
+
+# ---------------------------------------------------------------------------------------------------
+# 35. Search Insert Position - Binary Search
 
 nums = [1,3,5,6]
 target = 5
@@ -3223,7 +3252,6 @@ next_val = 1
 while next_val < len(nums):
     if nums[current] ^ nums[next_val] == 0 or nums[current] ^ nums[next_val] < 0:
         print(f"{current},{next_val}")
-        # nums.pop(current)
         current = next_val
         next_val += 1
         number_of_deletions += 1
@@ -3293,14 +3321,125 @@ if __name__ == "__main__":
         print(subset_sum_eq_K_Tabulation(array, target))
 
 # --------------------------------------------------------------------------------------------------
-      
+# 274. H-Index - Given an array of integers citations where citations[i] is the number of citations a researcher received 
+# for their ith paper, return the researcher's h-index [the maximum value of h such that the given researcher has 
+# published at least h papers that have each been cited at least h times.]  
 
+class Solution:
+    def hIndex(self, citations: list[int]) -> int:
+        citations.sort()
+        citations.reverse()
+        res = 0
+        for i in range(len(citations)):
+            if i + 1 <= citations[i]:
+                res = i + 1
+        return res
 
+# --------------------------------------------------------------------------------------------------
+# 2035. Partition Array Into Two Arrays to Minimize Sum Difference - You need to partition nums into 
+# two arrays of length n to minimize the absolute difference of the sums of the arrays.Return the 
+                                                            # minimum possible absolute difference.
+class Solution:                     # ---*--- Dynamic Programming Tabulation Soln. ---*---  
+    def minimumDifference(self, nums: list[int]) -> int:
+        total_sum = sum(nums)       # Tcol -> O(n x k)  |  Scol -> O(n x k)
+        k = total_sum
+        
+        dp = [[False for _ in range(k + 1)]for _ in range(len(nums))]
+        for i in range(len(nums)):
+            dp[i][0] = True
+        if nums[0] <= k:
+            dp[0][nums[0]] = True
+        for index in range(1, len(nums)):
+            for target in range(1, k + 1):
+                not_take = dp[index - 1][target]
+                take = False
+                if nums[index] <= target:
+                    take = dp[index - 1][target - nums[index]]
+                dp[index][target] = take or not_take
 
+        # dp[n - 1][col 0 ->.....total_Sum]
+        min_difference = float('inf')
+        for s1 in range((total_sum // 2) + 1):
+            if dp[len(nums) - 1][s1] == True:
+                min_difference = min(min_difference, (total_sum - s1) - s1) 
+        return min_difference
 
+sol = Solution()
+# print(sol.minimumDifference([3,9,7,3]))
 
+# --------------------------------------------------------------------------------------------------
+# 1254. Number of Closed Islands - Given a 2D grid consists of 0s (land) and 1s (water). An island is a maximal 
+# 4-directionally connected group of 0s and a closed island is an island totally (all left, top, right, bottom) surrounded by 1s.
+# Return the number of closed islands.  
 
+class Solution:                      # Tcol -> O(M x N), Scol -> O(M x N), M = no. of cols. ; N = no. of rows
+    def DFS(self, grid, i, j):
+        if ( i < 0 or i >= len(grid) or j < 0 or j >= len(grid[0]) or grid[i][j] == 1):  
+            return  
+        grid[i][j] = 1
+        self.DFS(grid, i + 1, j)
+        self.DFS(grid, i - 1, j)
+        self.DFS(grid, i, j + 1)
+        self.DFS(grid, i, j - 1)
 
+    def closedIsland(self, grid: list[list[int]]) -> int:
+        n, m = len(grid), len(grid[0])
+        for i in range(n):          # Step 1: Flood/destroy all land connected to the boundary
+            for j in range(m):
+                if (i == 0 or i == n - 1 or j == 0 or j == m - 1) and grid[i][j] == 0: # If it's on the border and it's land
+                    self.DFS(grid, i, j)
+
+        count = 0
+        for i in range(1, n -1):    # Step 2: Count the remaining isolated closed islands
+            for j in range(1, m - 1):
+                if grid[i][j] == 0:
+                    self.DFS(grid, i, j)
+                    count += 1
+        return count
+
+# --------------------------------------------------------------------------------------------------
+# 258. Add Digits - Given an integer num, repeatedly add all its digits until the result has only one digit, and return it.
+
+num = 47865829
+nums = str(num)
+while len(nums) > 1:
+    inner_num = int(nums)
+    sum = 0
+    while inner_num:
+        digit = inner_num % 10
+        sum += digit 
+        inner_num = inner_num // 10
+    nums = str(sum)
+# print(nums)
+
+# ---------------------------------------------------------------------------------------------------------------------
+# 4092. Binary Digit Score - Given two integers a and b, - Let s1 and s2 be the number of set bits in the 
+# binary representations of a and b, If s1 >= s2, the score is s1 * s2. Otherwise, s2 / s1 using **integer division.**
+
+class Solution:                                         # a = 5     binary - 0101   2 < 4
+    def calculateScore(self, a: int, b: int) -> int:    # b = 15    binary - 1111   $ 4 // 2 = 2
+        s1 = f"{a:016b}"
+        s2 = f"{b:016b}"
+
+        inner_s1, inner_s2 = int(s1), int(s2)
+        a_count, b_count = 0, 0
+
+        while inner_s1 > 0 or inner_s2 > 0:
+            digit1 = inner_s1 % 10
+            digit2 = inner_s2 % 10
+            if digit1 == 1:
+                a_count += 1
+            if digit2 == 1:
+                b_count += 1
+            inner_s1 = inner_s1 // 10
+            inner_s2 = inner_s2 // 10
+
+        if a_count >= b_count:
+            return (a_count * b_count) 
+        else:
+            return (b_count // a_count)
+
+# ---------------------------------------------------------------------------------------------------
 
 
 

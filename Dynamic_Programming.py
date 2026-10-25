@@ -419,7 +419,7 @@ def subset_sum_equals_k_Dp_Memoization(index, target, array):   # Tcol -> O(n x 
         if array[index] == target:
             return True
     if dp[index][target] != -1:
-        return dp[target]
+        return dp[index][target]
     not_take = subset_sum_equals_k_Dp_Memoization(index - 1, target, array)
     take = False
     if target >= array[index]:
@@ -486,3 +486,105 @@ if __name__ == "__main__":
         print(subset_sum_eq_K_Tabulation(array, target))
 
 # --------------------------------------------------------------------------------------------------
+# 2035. Partition Array Into Two Arrays to Minimize Sum Difference - You need to partition nums into 
+# two arrays of length n to minimize the absolute difference of the sums of the arrays.Return the 
+                                                            # minimum possible absolute difference.
+class Solution:                     # ---*--- Dynamic Programming Tabulation Soln. ---*---  
+    def minimumDifference(self, nums: list[int]) -> int:
+        total_sum = sum(nums)       # Tcol -> O(n x k)  |  Scol -> O(n x k)
+        k = total_sum
+        
+        dp = [[False for _ in range(k + 1)]for _ in range(len(nums))]
+        for i in range(len(nums)):
+            dp[i][0] = True
+        if nums[0] <= k:
+            dp[0][nums[0]] = True
+        for index in range(1, len(nums)):
+            for target in range(1, k + 1):
+                not_take = dp[index - 1][target]
+                take = False
+                if nums[index] <= target:
+                    take = dp[index - 1][target - nums[index]]
+                dp[index][target] = take or not_take
+
+        # dp[n - 1][col 0 ->.....total_Sum]
+        min_difference = float('inf')
+        for s1 in range((total_sum // 2) + 1):
+            if dp[len(nums) - 1][s1] == True:
+                min_difference = min(min_difference, (total_sum - s1) - s1) 
+        return min_difference
+
+sol = Solution()
+# print(sol.minimumDifference([3,9,7,3]))
+
+# --------------------------------------------------------------------------------------------------
+# PROBLEM - Count Subsets with Sum K | Given an array arr[] of non-negative integers and an integer target, 
+# count all subsets of the array whose sum is equal to the given target. Input: arr[] = [5, 2, 3, 10, 6, 8], target = 10
+                            # Explanation: The subsets {5, 2, 3}, {2, 8}, and {10} sum up to the target 10.   Output: 3
+                            # -- Dynamic Programming Memoization Soln. -- 
+class Solution:                             # • Time Col: (N x target); Space Col: (N x target);
+    def func(self, index, target, array, dp):       
+        if index == 0:                                      # Let recursion go all the way to index 0 to catch hidden zeros
+            if target == 0 and array[index] == 0:           # 2 - choices: Include the 0 or exclude the 0
+                return 2
+            elif target == 0 or array[index] == target:     # 1 - choice: Either target is met, or this element finishes it
+                return 1
+            return 0
+        if dp[index][target] != -1:
+            return dp[index][target]
+        not_take = self.func(index - 1, target, array, dp)
+        take = 0
+        if array[index] <= target:
+            take = self.func(index - 1, target - array[index], array, dp)
+        dp[index][target] = take + not_take
+        return dp[index][target]
+    
+    def perfectSum(self, arr, target):
+        dp = [[-1 for _ in range(target + 1)]for _ in range(len(arr))]
+        return self.func(len(arr) - 1, target, arr, dp)      
+
+# sol = Solution()
+# print(sol.perfectSum([5, 2, 3, 10, 6, 8], 10))
+
+                        # -- Dynamic Programming Tabulation Soln. -- 
+
+
+
+# --------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

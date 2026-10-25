@@ -217,6 +217,36 @@ if __name__ == "__main__":  # Number of Islands
     print(count)
 
 # ---------------------------------------------------------------------------------------------------
+# 1254. Number of Closed Islands - Given a 2D grid consists of 0s (land) and 1s (water). An island is a maximal 
+# 4-directionally connected group of 0s and a closed island is an island totally (all left, top, right, bottom) surrounded by 1s.
+# Return the number of closed islands.  
+
+class Solution:                      # Tcol -> O(M x N), Scol -> O(M x N), M = no. of cols. ; N = no. of rows
+    def DFS(self, grid, i, j):
+        if ( i < 0 or i >= len(grid) or j < 0 or j >= len(grid[0]) or grid[i][j] == 1):  
+            return  
+        grid[i][j] = 1
+        self.DFS(grid, i + 1, j)
+        self.DFS(grid, i - 1, j)
+        self.DFS(grid, i, j + 1)
+        self.DFS(grid, i, j - 1)
+
+    def closedIsland(self, grid: list[list[int]]) -> int:
+        n, m = len(grid), len(grid[0])
+        for i in range(n):          # Step 1: Flood/destroy all land connected to the boundary
+            for j in range(m):
+                if (i == 0 or i == n - 1 or j == 0 or j == m - 1) and grid[i][j] == 0: # If it's on the border and it's land
+                    self.DFS(grid, i, j)
+
+        count = 0
+        for i in range(1, n -1):    # Step 2: Count the remaining isolated closed islands
+            for j in range(1, m - 1):
+                if grid[i][j] == 0:
+                    self.DFS(grid, i, j)
+                    count += 1
+        return count
+
+# ---------------------------------------------------------------------------------------------------
 # Detecting Cycle in Directed Graph - Using DFS
 
 class Solution:

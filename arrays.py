@@ -189,3 +189,48 @@ for row in grid:            # Print the grid row-by-row to see the result
     print(row)
 
 # -------------------------------------------------------------------------------
+# Fibonacci - calculate the closest Fibonacci index and generates the surrounding sequence.
+
+import math
+def get_fibonacci_neighbors(X, count=3):
+    # Finds the closest Fibonacci number to X and scales up/down by 'count' steps using the Golden Ratio.
+    
+    if X <= 0:
+        return "Please enter a positive number greater than 0."
+        
+    PHI = (1 + math.sqrt(5)) / 2  # The Golden Ratio (~1.6180339887)
+    
+    # Step 1: Estimate the index 'n' using the logarithmic formula
+    n = round(math.log(X * math.sqrt(5), PHI))
+    
+    # Step 2: Calculate the exact baseline Fibonacci number using Binet's formula
+    closest_fib = round((PHI**n) / math.sqrt(5))
+    
+    # Step 3: Scale up using multiplication
+    bigger = []
+    current = closest_fib
+    for _ in range(count):
+        current = round(current * PHI)
+        bigger.append(current)
+        
+    # Step 4: Scale down using division
+    smaller = []
+    current = closest_fib
+    for _ in range(count):
+        current = round(current / PHI)
+        smaller.append(current)
+        
+    smaller.reverse()    # Reverse smaller list to keep chronological order
+    
+    return {"Target Input": X, "Closest Fibonacci": closest_fib, f"Next {count} Smaller": smaller, f"Next {count} Bigger": bigger}
+
+# --- Example Usage ---
+random_number = 1000
+result = get_fibonacci_neighbors(random_number, count=3)
+
+# print(f"Results for input: {result['Target Input']}")
+# print(f"Closest Fibonacci: {result['Closest Fibonacci']}")
+# print(f"Smaller Neighbors: {result[f'Next 3 Smaller']}")
+# print(f"Bigger Neighbors:  {result[f'Next 3 Bigger']}")
+
+# -------------------------------------------------------------------------------

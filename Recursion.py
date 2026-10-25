@@ -19,6 +19,17 @@ def print_name(i, n):
 if __name__ == "__main__":
     print_name(5, 1)
 
+# ---------------------------------------------------------------------------------------------------
+def f(str1, l, r):      # Pallindrome using Linear Recursion
+    if l > r:
+        return True
+    if str1[l] != str1[r]:
+        return False
+    return f(str1, l + 1, r - 1)
+
+str1 = "aabbna"
+print(f(str1, 0, len(str1) - 1))
+
 # --------------------------------------------------------------------------------------------------
 # i To N Using Backtracking - 1, 2, 3, 4, 5 (not using + to call the next iteration)
 def sum_func(i, n):
