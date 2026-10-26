@@ -548,7 +548,27 @@ class Solution:                             # • Time Col: (N x target); Space 
 
                         # -- Dynamic Programming Tabulation Soln. -- 
 
+def countSubsets(nums, target):
+    n = len(nums)
+    dp = [[0 for _ in range(target + 1)] for _ in range(n)]
 
+    # Base case for the first element ONLY
+    dp[0][0] = 1                # 1 way to pick empty set for sum 0
+
+    if nums[0] == 0:
+        dp[0][0] = 2            # Including or excluding nums[0] both yield sum 0
+    elif nums[0] <= target:
+        dp[0][nums[0]] = 1      # 1 way to form sum equal to nums[0]
+
+    for i in range(1, n):
+        for s in range(target + 1):
+            not_take = dp[i-1][s]
+            take = 0
+            if nums[i] <= s:
+                take = dp[i-1][s - nums[i]]
+            dp[i][s] = not_take + take
+            
+    return dp[n-1][target]
 
 # --------------------------------------------------------------------------------------------------
 
