@@ -3440,11 +3440,99 @@ class Solution:                                         # a = 5     binary - 010
             return (b_count // a_count)
 
 # ---------------------------------------------------------------------------------------------------
+# 283. Move Zeroes - Given an integer array nums, move all 0's to the end of it 
+#                    while maintaining the relative order of the non-zero elements. -   DO IT In - Place
+nums = [0, 0, 1, 0, 1, 1, 0]
 
+i = 0
+j = len(nums)
+while i < j:
+    if nums[i] == 0:
+        print(i)
+        nums.pop(i)
+        nums.append(0)
+        j -= 1
+    else:
+        i += 1
 
+# print(nums)
 
+# ---------------------------------------------------------------------------------------------------
+# 442. Find All Duplicates in an Array - Given an integer array nums of length n where all the integers of nums 
+#      are in the range [1, n] and each integer appears at most twice, return an array of all the integers that appears twice.
+                                # 0(N)
+nums = [4, 3, 2, 7, 8, 2, 3, 1]
+n = len(nums)
+maps = {}
+ans = []
+for i in range(n):
+    if nums[i] not in maps:
+        maps[nums[i]] = 1
+    else:
+        maps[nums[i]] += 1
+for num, count in maps.items():
+    if count == 2:
+        ans.append(num)
 
+# print(maps)
+# print(ans)
 
+# ---------------------------------------------------------------------------------------------------
+# 3963. Create Grid With Exactly One Path - Construct any m x n grid of '.' & '#', where: '.' - free cell.'#' - obstacle cell.
+        # Starts AT [0, 0] ends at [m - 1[n - 1], can only move right and down, Return any grid such that 
+                                                                        # there is exactly one valid path.
+def rec(grid, i, j, m, n):
+    if i >= m or j >= n:
+        return False
+    grid[i][j] = "."
+    if i == m - 1 and j == n - 1:
+        return True
+    if rec(grid, i, j + 1, m, n):   # Right
+        return True
+    if rec(grid, i + 1, j, m, n):   # Down
+        return True
+    grid[i][j] = "#"    # Backtrack
+    return False
+
+m, n = 3, 4
+grid = [['#' for _ in range(n)] for _ in range(m)]
+rec(grid, 0, 0, m, n)
+# print(["".join(row) for row in grid])
+
+# ---------------------------------------------------------------------------------------------------
+# 4088. Difference Between Peaks and Valleys - index i is a peak if   : 0 < i < n - 1  nums[i - 1] < nums[i] > nums[i + 1]
+                                            #  index i is a valley if : 0 < i < n - 1  nums[i - 1] > nums[i] < nums[i + 1]
+                                            #  Return (peak - valley)
+peak = valley = 0
+nums = [1,5,2,4,1,3,0]
+n = len(nums)
+i = 0
+j = 1
+k = 2
+if len(nums) < 3:
+    print(0)
+if len(nums) == 3:
+    print(nums[1])
+
+while k < n:
+    if nums[i] < nums[j] and nums[j] > nums[k]:
+        peak += nums[j]
+        i += 1
+        j += 1
+        k += 1
+    elif nums[i] > nums[j] and nums[j] < nums[k]:
+        valley += nums[j]
+        i += 1
+        j += 1
+        k += 1
+    else:
+        i += 1
+        j += 1
+        k += 1
+
+print(peak - valley)
+
+# ---------------------------------------------------------------------------------------------------
 
 
 
