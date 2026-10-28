@@ -641,6 +641,240 @@ class Solution:                         # -- Dynamic Programming Memoization Sol
         return self.countSubsets(arr, target)
 
 # --------------------------------------------------------------------------------------------------
+# 3882. Minimum XOR Path in a Grid - Given a m x n grid filled with non-negative integers, find a path from top-left (0,0) to
+#       bottom-right (m-1, n-1), moving only right or down, which minimizes the bitwise XOR of all values 
+                               # along the path (including both endpoints).
+class Solution:
+    def f(self, i, j, grid, dp):
+        if i == 0 and j == 0:           # Time - O(n·m·K) where K = max set size;  Space - O(n·m·K)
+            return {grid[0][0]}
+        if i < 0 or j < 0:
+            return set()                # Note: Unlike min-path-sum, XOR is not monotonic, so DP must track the
+        if dp[i][j] != -1:              # set of all reachable XORs per cell — not a single best value.
+            return dp[i][j]
+
+        # Get all reachable XOR paths from UP and LEFT
+        up_paths = self.f(i - 1, j, grid, dp)
+        left_paths = self.f(i, j - 1, grid, dp)
+
+        # Compute new XOR totals for current cell
+        res = set()
+        for p in up_paths:
+            res.add(p ^ grid[i][j])
+        for p in left_paths:
+            res.add(p ^ grid[i][j])
+
+        dp[i][j] = res
+        return dp[i][j]
+
+    def minCost(self, grid: list[list[int]]) -> int:
+        n, m = len(grid), len(grid[0])
+        dp = [[-1 for _ in range(m)] for _ in range(n)]
+        
+        all_possible_xors = self.f(n - 1, m - 1, grid, dp)
+        return min(all_possible_xors)
+
+# --------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
