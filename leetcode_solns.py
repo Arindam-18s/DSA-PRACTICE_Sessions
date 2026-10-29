@@ -3510,9 +3510,11 @@ i = 0
 j = 1
 k = 2
 if len(nums) < 3:
-    print(0)
+    pass
+    # print(0)
 if len(nums) == 3:
-    print(nums[1])
+    pass
+    # print(nums[1])
 
 while k < n:
     if nums[i] < nums[j] and nums[j] > nums[k]:
@@ -3530,7 +3532,7 @@ while k < n:
         j += 1
         k += 1
 
-print(peak - valley)
+# print(peak - valley)
 
 # ---------------------------------------------------------------------------------------------------
 # 4079. Prime Subset Selection I - Given n (upper limit for primes), s (maximum allowed sum).
@@ -3597,12 +3599,72 @@ class Solution:
         return min(all_possible_xors)
 
 # --------------------------------------------------------------------------------------------------
+# 80. Remove Duplicates from Sorted Array II - Given an integer array nums sorted in non-decreasing order, 
+#     remove some duplicates in-place such that each unique element appears at most twice.
 
+nums = [1, 1, 2, 2, 2, 3, 4, 4]
+n = len(nums) - 1
+k = 0
+maps = {}
+while n >= 0:
+    if nums[n] not in maps:
+        maps[nums[n]] = 1
+        k += 1
+    elif nums[n] in maps and maps[nums[n]] == 1:
+        maps[nums[n]] += 1
+        k += 1
+    elif nums[n] in maps and maps[nums[n]] >= 2:
+        nums.pop(n)
+    n -= 1
+# print(k)
+# print(nums)
 
+# --------------------------------------------------------------------------------------------------
+# 1071. Greatest Common Divisor of Strings - Given two strings str1 and str2, return the largest string x 
+#                                            such that x divides both str1 and str2.
+#                                            Input: str1 = "ABABAB", str2 = "ABAB" Output: "AB"
+s1 = "ABCABC"
+s2 = "ABC"
+flag = False
 
+if s1 + s2 == s2 + s1:
+    # print("gcd exits")
+    flag = True
+else:
+    pass
+    # print("nope lads, its doesn't")
 
+def gcd(a, b):                            # Iterative GCD - W/O violating Recursion Stack Space
+    while b:
+        a, b = b, a % b
+    return a
 
+if flag:
+    n = gcd(len(s1), len(s2))
+    # print(s1[0 : n])
 
+# --------------------------------------------------------------------------------------------------
+# 1207. Unique Number of Occurrences - Given an array of integers arr, return true if the number of occurrences of each value 
+#                                      in the array is unique or false otherwise.
+                                     # arr = [1,2,2,1,1,3] Output: true - The value 1 has 3 occurrences, 
+class Solution:                      # 2 has 2 and 3 has 1. No two values have the same number of occurrences.
+    def uniqueOccurrences(self, arr: list[int]) -> bool:
+        maps = {}
+        for num in arr:
+            if num not in maps:
+                maps[num] = 1
+            elif num in maps:
+                maps[num] += 1
+            
+        map2 = {}
+        for vals in maps.values():
+            if vals in map2:
+                return False
+            else:
+                map2[vals] = 1
+        return True
+
+# --------------------------------------------------------------------------------------------------
 
 
 
