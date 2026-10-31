@@ -2893,6 +2893,7 @@ class Solution:
 
 #---------------------------------------------------------------------------------------------------
 # 122. Best Time to Buy and Sell Stock II - space-optimized Dynamic Programming (DP) - Time - 0(n), Space - 0(1)
+
 class Solution:
     def maxProfit(self, prices: list[int]) -> int:
         even = 0
@@ -3665,8 +3666,185 @@ class Solution:                      # 2 has 2 and 3 has 1. No two values have t
         return True
 
 # --------------------------------------------------------------------------------------------------
+# 74. Search a 2D Matrix - given an m x n integer matrix, Each row is sorted   | # Tcol -> O(log(n * m))
+#                          The first integer of each row is greater than the last integer of the previous row.
+# Given an integer 'target', return true if target is in matrix or false otherwise.
 
+class Solution:          # Input: matrix = [[1,3,5,7],[10,11,16,20],[23,30,34,60]], target = 3 | Output: True
+    def searchMatrix(self, matrix: list[list[int]], target: int) -> bool:
+        if not matrix or not matrix[0]:
+            return False
+        n, m = len(matrix), len(matrix[0])
+        left, right = 0, (n * m) - 1  # 0 indexed flattened array, starting and ending index no.
 
+        while left <= right:
+            mid = (left + right) // 2              # [ 1, 3, 5, 7]      target = 20
+            row = mid // m                         # [10,11,16,20]  <-- Output: True
+            cols = mid % m                         # [23,30,34,60]
+                    # This trick allows the computer to treat the grid as one long line without wasting any memory rewriting it
+            if matrix[row][cols] == target:
+                return True
+            elif matrix[row][cols] < target:
+                left = mid + 1
+            else:
+                right = mid - 1
+        return False
+
+class Solution:          # Tcol -> 0(n + m)
+    def searchMatrix(self, matrix: list[list[int]], target: int) -> bool:
+        n, m = len(matrix), len(matrix[0])         
+        k = -1
+        for i in range(n):
+            if target < matrix[i][m - 1]:
+                k = i
+                break
+        for j in range(m):
+            if matrix[k][j] == target:
+                return True
+        return False
+
+# --------------------------------------------------------------------------------------------------
+# 622. Design Circular Queue - Pure List Implementation
+
+class MyCircularQueue:
+    def __init__(self, k: int):
+        self.k = k
+        self.Q = [None] * k
+
+    def enQueue(self, value: int) -> bool:
+        if self.Q[self.k - 1] == None:
+            for i in range(self.k):
+                if self.Q[i] == None:
+                    self.Q[i] = value 
+                    return True
+        else:  
+            return False
+
+    def deQueue(self) -> bool:
+        if self.Q[0] != None:
+            for i in range(1, self.k):       # Shift all elements to the left by 1 position
+                self.Q[i - 1] = self.Q[i]
+            self.Q[self.k - 1] = None
+            return True
+        else:
+            return False
+
+    def Front(self) -> int:
+        if self.Q[0] != None:
+            return self.Q[0]
+        else:
+            return None
+
+    def Rear(self) -> int:
+        if self.Q[0] != None:
+            for i in range(self.k - 1, -1, -1):
+                if self.Q[i] != None:
+                    return self.Q[i]
+        else:
+            return None
+
+    def isEmpty(self) -> bool:
+        if self.Q[0] == None:
+            return True
+        else:
+            return False
+
+    def isFull(self) -> bool:
+        if self.Q[self.k - 1] != None:
+            return True
+        else:
+            return False
+
+                           # wrap-around modular arithmetic Implementation - No Loops / No Shifting
+
+class MyCircularQueue2:    # Tcol -> O(1) | Scol -> O(k)
+    def __init__(self, k: int):
+        self.k = k
+        self.Q = [None] * k
+        self.head = 0
+        self.tail = 0
+        self.count = 0
+
+    def enQueue(self, value: int) -> bool:
+        if self.isFull():
+            return False
+        self.Q[self.tail] = value
+        self.tail = (self.tail + 1) % self.k
+        self.count += 1
+        return True
+
+    def deQueue(self) -> bool:
+        if self.isEmpty():
+            return False
+        self.Q[self.head] = None
+        self.head = (self.head + 1) % self.k
+        self.count -= 1
+        return True 
+
+    def Front(self) -> int:
+        if self.isEmpty():
+            return -1
+        return self.Q[self.head]
+
+    def Rear(self) -> int:
+        if self.isEmpty():
+            return -1
+        return self.Q[(self.tail - 1 + self.k) % self.k]
+
+    def isEmpty(self) -> bool:
+        return self.count == 0
+
+    def isFull(self) -> bool:
+        return (self.count == self.k)
+
+myCircularQueue = MyCircularQueue(3)
+myCircularQueue = MyCircularQueue2(3)
+
+def tests():
+    print(myCircularQueue.enQueue(1))  # return True
+    print(myCircularQueue.enQueue(2))  # return True
+    print(myCircularQueue.enQueue(3))  # return True
+    print(myCircularQueue.enQueue(4))  # return False
+    print(myCircularQueue.Rear())      # return 3
+    print(myCircularQueue.isFull())    # return True
+    print(myCircularQueue.deQueue())   # return True
+    print(myCircularQueue.enQueue(4))  # return True
+    print(myCircularQueue.Rear())      # return 4
+
+# --------------------------------------------------------------------------------------------------
+# 50. Pow(x, n) - Implement pow(x, n), which calculates x raised to the power n (i.e., xn). 
+                # -100.0 < x < 100.0 | -231 <= n <= 231-1 | -104 <= xn <= 104
+class Solution:                 # Exponentiation by Squaring - Tcol - O(logN) - Iterative Approach
+    def myPow(self, x: float, n: int) -> float:
+        exp = abs(n)            # Handle the negative exponent case using the absolute value
+        ans = 1.0
+        while exp > 0:
+            if exp % 2 != 0:    # Check the current lowest bit of the exponent
+                ans *= x
+            x *= x
+            exp //= 2           # Use integer division to reduce the exponent
+# Invert exactly once at the end if n was originally negative
+        if n < 0:
+            return 1.0 / ans
+        return ans
+    # *** -------------------------------------------------------- *** #
+
+    def power(self, x: float, exp: int, ans: float) -> float:
+        if x == 0:
+            return 0
+        if exp == 0:
+            return ans
+        if exp % 2 != 0:
+            ans *= x
+        return self.power(x * x, exp // 2, ans) 
+                                              # Exponentiation by Squaring - Tcol - O(logN) - Recursive Approach
+    def myPow_using_Recursion(self, x: float, n: int) -> float:
+        result = self.power(x, abs(n), 1.0)   # 1. Compute the result using the absolute value of the exponent
+        if n < 0:                             # 2. Invert exactly once at the very end if n was negative
+            return 1.0 / result
+        return result
+
+#---------------------------------------------------------------------------------------------------
 
 
 

@@ -624,3 +624,22 @@ class Solution:
 
         return self.valid_combinations(0, nums, k, n, [], 0, [])
 # --------------------------------------------------------------------------------------------------
+# 50. Pow(x, n) - Implement pow(x, n), which calculates x raised to the power n (i.e., xn). 
+                # -100.0 < x < 100.0 | -231 <= n <= 231-1 | -104 <= xn <= 104
+class Solution:     # Exponentiation by Squaring - Tcol - O(logN) - Recursive Approach
+    def power(self, x: float, exp: int, ans: float) -> float:
+        if x == 0:
+            return 0
+        if exp == 0:
+            return ans
+        if exp % 2 != 0:
+            ans *= x
+        return self.power(x * x, exp // 2, ans) 
+                                              
+    def myPow(self, x: float, n: int) -> float:
+        result = self.power(x, abs(n), 1.0)   # 1. Compute the result using the absolute value of the exponent
+        if n < 0:                             # 2. Invert exactly once at the very end if n was negative
+            return 1.0 / result
+        return result
+
+#---------------------------------------------------------------------------------------------------
