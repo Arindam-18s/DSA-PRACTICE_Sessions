@@ -3845,8 +3845,44 @@ class Solution:                 # Exponentiation by Squaring - Tcol - O(logN) - 
         return result
 
 #---------------------------------------------------------------------------------------------------
+# 4097. Minimum Value of Merged Integers©leetcode - Given an even-length array nums:
+# • Pair and concatenate adjacent elements (e.g., nums[i] + nums[i+1] for even i).
+# • Return the minimum value among all merged integers.
 
+def minimumValueOfMergedIntegers():
+    nums = [23,55,42,21]
+    stored = []
+    i = 0
+    while i < len(nums):
+        stored.append(str(nums[i]) + str(nums[i + 1]))
+        i += 2
 
+    stored = [int(x) for x in stored]
+    print(stored)
+
+#---------------------------------------------------------------------------------------------------
+# 453. Minimum Moves to Equal Array Elements - Given an integer array nums of size n, 
+#                             return the minimum number of moves required to make all array elements equal.
+#                             In one move, you can increment n - 1 elements of the array by 1.
+def minMoves(self, nums: list[int]) -> int:
+    nums = [-7, -5, -2, -1, 2, 10, 17]      # [-2, -1, 2], can increment all except the val we are 
+    # nums = [-1, 0, 1]                                   # trying to converge all the other elements into
+
+    minimum = min(nums)
+
+    ans = 0                                 # Just Converge all into the minimum
+    maps = {}
+    for i, num in enumerate(nums):
+        diff = minimum - num
+        maps[i] = diff
+
+    for vals in maps.values():
+        ans += abs(vals)
+
+    print(maps)
+    print(ans)
+
+#---------------------------------------------------------------------------------------------------
 
 
 

@@ -143,6 +143,53 @@ if __name__ == "__main__":
     # print(palindrome_str(0))
 
 # --------------------------------------------------------------------------------------------------
+# Given a String, Remove All the 'a'`s From it - str1 = "hajihaaaaab" o/p - "hjihb"
+
+def rec(i, str1):
+    if i >= len(str1):
+        return str1
+    if str1[i] == 'a':
+        str1 = str1[:i] + str1[i + 1:]
+        return rec(i , str1)
+    return rec(i + 1, str1)
+if __name__ == "__main__":
+    str1 = "hjihaaaaa"
+    # print(rec(0, str1))
+
+# --------------------------------------------------------------------------------------------------
+# Given a long String, Remove all Appearances of certain String From it - str2 = "applehijibijbijapple" str_to_remove = "apple" 
+                                                                      # | o/p - "hijibijbij"
+def skipApple(i : int, str_to_remove : str, len_of_str_to_remove : int, str2 : list):
+    if i >= len(str2):
+        return str2             # Character by chracter Iteration - TRAP For Interviews
+    if str2[ i : i + len_of_str_to_remove] == str_to_remove:
+        str2 = str2[:i] + str2[i + len_of_str_to_remove:]
+        return skipApple(i, str_to_remove, len_of_str_to_remove, str2)
+    return skipApple(i + 1, str_to_remove, len_of_str_to_remove, str2)
+
+if __name__ == "__main__":
+    str2 = "Banana,Guava,Mango,Apple,Pinnaple,Apple,Jackfruit,AppStore,Appoxy"
+    # print(skipApple(0, 'Apple', 5, str2))
+
+# --------------------------------------------------------------------------------------------------
+# Given a comma-separated string, remove all exact matches of a target word (e.g., `"App"`) Recursively 
+# without accidentally deleting substrings inside larger words (like `"Apple"`, `"AppStore"`, or `"Appoxy"`).
+
+def skipAskedWord(str_to_remove : str, str2 : str):
+    pattern_to_find = f",{str_to_remove},"              # Find and Slicing Method
+    current_pattern_idx = str2.find(pattern_to_find)
+
+    if current_pattern_idx == -1:      # Base Case: If the pattern isn't found anywhere, we are done!
+        return str2
+    
+    str2 = str2[:current_pattern_idx] + str2[current_pattern_idx + len(pattern_to_find) - 1 :]
+    return skipAskedWord(str_to_remove, str2)
+
+if __name__ == "__main__":
+    str2 = "Banana,Guava,Mango,Apple,App,App,Pinnaple,Apple,Jackfruit,AppStore,Appoxy,App"
+    # print(skipAskedWord('App',str2))
+
+# --------------------------------------------------------------------------------------------------
 # Fibonacci - Usage of Multiple Recursive Functions - Calls Happens sequencially, like F(n-1) will totally go until the base
 # Case, come back with a value and then the f(n-2) will do the same
 
