@@ -3883,8 +3883,46 @@ def minMoves(self, nums: list[int]) -> int:
     print(ans)
 
 #---------------------------------------------------------------------------------------------------
+# 504. Base 7 - Given an integer num, return a string of its base 7 representation.
 
+def convertToBase7(self, num: int) -> str:
+    if num == 0:
+        return "0"
 
+    ans = deque()
+    quotent = abs(num)
+    while quotent != 0:
+        rem = quotent % 7
+        quotent = quotent // 7
+        ans.appendleft(rem)
+
+    result = int("".join(map(str, ans)))
+    if num < 0:
+        return (-result)
+    else:
+        return (result)
+
+#---------------------------------------------------------------------------------------------------
+# 462. Minimum Moves to Equal Array Elements II - Given an integer array nums of size n, 
+# return the minimum number of moves required to make all array elements equal.
+                        # In one move, you can increment or decrement an element of the array by 1.
+class Solution:
+    def minMoves2(self, nums: list[int]) -> int:
+        nums.sort()
+        minimum = min(nums)                     # nums = [1,2,3],  Output: 2 | [1,2,3]  =>  [2,2,3]  =>  [2,2,2]
+        mid = len(nums) // 2
+        maps = {}
+
+        for i in range(len(nums)):
+            diff = abs(nums[mid] - nums[i])
+            maps[i] = diff
+
+        res = 0
+        for val in maps.values():
+            res += val
+        return res
+
+#---------------------------------------------------------------------------------------------------
 
 
 

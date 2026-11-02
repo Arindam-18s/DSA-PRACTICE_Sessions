@@ -1,25 +1,22 @@
-import sys
-sys.setrecursionlimit(2000000)
+# 462. Minimum Moves to Equal Array Elements II - Given an integer array nums of size n, 
+# return the minimum number of moves required to make all array elements equal.
+                        # In one move, you can increment or decrement an element of the array by 1.
+class Solution:
+    def minMoves2(self, nums: list[int]) -> int:
+        nums.sort()
+        minimum = min(nums)
+        mid = len(nums) // 2
+        maps = {}
 
-def rec(i, str1):
-    if i >= len(str1):
-        return str1
-    if str1[i] == 'a':
-        str1 = str1[:i] + str1[i + 1:]
-        return rec(i , str1)
-    return rec(i + 1, str1)
+        for i in range(len(nums)):
+            diff = abs(nums[mid] - nums[i])
+            maps[i] = diff
 
-def skipAskedWord(str_to_remove : str, str2 : str):
-    pattern_to_find = f",{str_to_remove},"
-    current_pattern_idx = str2.find(pattern_to_find)
+        res = 0
+        for val in maps.values():
+            res += val
+        return res
 
-    if current_pattern_idx == -1:      # Base Case: If the pattern isn't found anywhere, we are done!
-        return str2
-    
-    str2 = str2[:current_pattern_idx] + str2[current_pattern_idx + len(pattern_to_find) - 1 :]
-    return skipAskedWord(str_to_remove, str2)
 
-str1 = "hjihaaaaa"
-str2 = "Banana,Guava,Mango,Apple,App,App,Pinnaple,Apple,Jackfruit,AppStore,Appoxy,App"
-# print(rec(0, str1))
-print(skipAskedWord('App',str2))
+sol = Solution()
+print(sol.minMoves2([1, 2, 3]))
