@@ -3923,9 +3923,112 @@ class Solution:
         return res
 
 #---------------------------------------------------------------------------------------------------
+# 3736. Minimum Moves to Equal Array Elements III -In one move, you may increase the value of any single element 
+# nums[i] by 1. - Return the minimum total number of moves required so that all elements in nums become equal.
 
+class Solution:
+    def minMoves(self, nums: List[int]) -> int:
+        maximum = max(nums)
+        maps = {}
+        for i in range(len(nums)):
+            diff = abs(maximum - nums[i])
+            maps[i] = diff
+        ans = 0
+        for val in maps.values():
+            ans += val
+        return ans
 
+#---------------------------------------------------------------------------------------------------
+# 1979. Find Greatest Common Divisor of Array - Given an integer array nums, return the GCD of the smallest number 
+#      and largest number in nums.The GCD of two numbers is the largest positive integer that evenly divides both numbers.
 
+def findGCD(self, nums: list[int]) -> int:
+    nums = [3,3]
+
+    smallest = min(nums)
+    largest = max(nums)
+
+    factors_of_smallest = []
+    for i in range(2, smallest + 1):
+        if smallest % i == 0:
+            factors_of_smallest.append(i)
+
+    factors_of_smallest = factors_of_smallest[::-1]
+    # print(factors_of_smallest)
+
+    for j in range(len(factors_of_smallest)):
+        if largest % factors_of_smallest[j] == 0:
+            print(f"there we go, gcd is : {factors_of_smallest[j]}")
+            return factors_of_smallest[j]
+    return 1
+
+#---------------------------------------------------------------------------------------------------
+# 1081. Smallest Subsequence of Distinct Characters - Given a string s, return the lexicographically smallest 
+#                                subsequence of s that contains all the distinct characters of s exactly once.
+#                                s = "cbacdcbc" |  Output: "acdb"
+class Solution:
+    def smallestSubsequence(self, s: str) -> str:         #  Time - O(N) | Space - O(1)
+        maps = {char: i for i, char in enumerate(s)}
+        stack = []      # We use total 3 data structures here | hashmap - for recording the last appearance of each char
+        seen = set()    # Stack - To perform Monotonic Stack Operation(stack chars in lexiographically Desc. order always)
+                        # Set() - To keep Track of whats actually is in the stack
+        for i, char in enumerate(s):
+            if char in seen:
+                continue
+            while stack and stack[-1] > char and maps[stack[-1]] > i:
+                removed_num = stack.pop()      
+                seen.remove(removed_num)        # maps[stack[-1]] > i <- if the elmt at the top of the stack 
+            stack.append(char)                                         # arrives later in the string Again or not
+            seen.add(char)
+        return "".join(char for char in stack)
+
+#---------------------------------------------------------------------------------------------------
+# 1291. Sequential Digits - An integer has sequential digits if and only if each digit in the number 
+#       is one more than the previous digit. Return a sorted list of all the integers in the range [low, high] 
+#                                                                       inclusive that have sequential digits.
+def rec(index, arr:list):
+    if index == 0:
+        arr[index] = str(int(arr[index]) + 1)
+    if index < len(arr):                                # low = 1000, high = 13000
+        if index > 0:                                   # Output: [1234,2345,3456,4567,5678,6789,12345]    
+            arr[index] = str(int(arr[index - 1]) + 1)
+        return rec(index + 1, arr)
+    return arr
+
+if __name__ == "__main__":
+    low, high = 1000, 13000
+    start_len = len(str(low))
+    curr_arr = [str(i + 1) for i in range(start_len)]
+
+    result = []
+    while True:
+        curr = int("".join(curr_arr))
+        if curr > high:
+            break
+        if curr >= low:
+            result.append(curr)
+        if curr_arr[-1] == 9:
+            start_len += 1
+            curr_arr = [str(i + 1) for i in range(start_len)]
+        else:
+            rec(0, curr_arr)
+
+    # print(result)
+
+#---------------------------------------------------------------------------------------------------
+# 1331. Rank Transform of an Array - Dense Ranking - *** Very Very important code altogether ***
+                    # Given an array of integers arr, replace each element with its rank.
+class Solution:
+    def arrayRankTransform(self, arr: list[int]) -> list[int]:
+        temp = sorted(list(set(arr)))                     # Example 1:  arr = [40,10,20,30]  |  Output: [4,1,2,3]
+        rank_map = {val:rank for rank, val in enumerate(temp, start=1)}
+        rank_arr = [rank_map[num] for num in arr]         # Example 2:  arr = [100, 100, 1, 100]  |  Output: [1,1,2,1]  
+        return(rank_arr)
+
+# sol = Solution()
+# print(sol.arrayRankTransform([40,10,20,30]))
+
+#---------------------------------------------------------------------------------------------------
 
 
 

@@ -106,6 +106,7 @@ class ListNode:
     def __init__(self, val=0, next=None):
         self.val = val
         self.next = next
+
 class Solution:
     def rotateRight(self, head: ListNode, k: int) -> ListNode:
         if not head or not head.next or k == 0:
@@ -159,3 +160,387 @@ class Solution:
                 return True
         return False
 #---------------------------------------------------------------------------------------------------
+# Reversing a Linked List
+
+def reverseList(head):     # O(n) Time, 0(1) Space
+    prev = None
+    curr = head
+    while curr:
+        next_temp = curr.next
+        curr.next = prev
+        prev = curr
+        curr = next_temp
+    return prev
+
+#---------------------------------------------------------------------------------------------------
+# 234. Palindrome Linked List - Given the head of a singly linked list, return true if it is a palindrome 
+#                               or false otherwise. - Tcol -> O(n), Space -> O(1)
+class Solution:
+    def isPalindrome(self, head: ListNode | None) -> bool:
+        if not head or not head.next:
+            return True                         # Main Strategy is to first find the middle of the linked list
+        slow = fast = head                      # Then reverse the secind half, And Check for pallindrome from
+        while fast and fast.next:               # Behind and from the start until both intersects in the middle
+            slow = slow.next
+            fast = fast.next.next
+
+        tail = slow
+        prev = None
+        while tail:
+            temp = tail.next
+            tail.next = prev
+            prev = tail
+            tail = temp
+        tail = prev     # Reversed Linked List Head At the last position
+            
+        while tail:
+            if head.val == tail.val:
+                head = head.next
+                tail = tail.next
+            else:
+                return False
+        return True
+
+#---------------------------------------------------------------------------------------------------
+# Question - Given Head of a LinkedList And a num, eleminate all the listnodes with value < that given num, and return the List
+
+# head = ListNode(3)        # head[3]--->A[5]--->B[1]--->C[6]--->D[7]
+# A = ListNode(5)
+# B = ListNode(1)
+# C = ListNode(6)
+# D = ListNode(7)
+
+# head.next = A  # Linked LIst got connected here
+# A.next = B
+# B.next = C
+# C.next = D
+
+class Solution:
+    def findNthnum(self, head:ListNode, num:int):
+        temp = head
+        dummy = ListNode(0)
+        dummy.next = head
+        prev = dummy
+        while temp:
+            if temp.val < num:
+                prev.next = temp.next
+                temp = temp.next
+            else:
+                prev = temp
+                temp = temp.next
+        return dummy.next
+
+sol = Solution()
+result = sol.findNthnum(head, 5)
+while result:
+    print(result.val , end=" -> ")
+    result = result.next
+
+#---------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
