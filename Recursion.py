@@ -370,7 +370,7 @@ if __name__ == "__main__":
     # print(QuickSort(nums, 0, len(nums) - 1))
 
 # --------------------------------------------------------------------------------------------------
-# Printing Sums all the individual subsequences of a given Array /List
+# Printing Sums of all the individual subsequences of a given Array /List
 
 def subset_sum_I(index, arr, current_subarray, current_sum, output):
     if index >= len(arr):

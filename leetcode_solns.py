@@ -4029,7 +4029,31 @@ class Solution:
 # print(sol.arrayRankTransform([40,10,20,30]))
 
 #---------------------------------------------------------------------------------------------------
+# 1260. Shift 2D Grid - Given a 2D grid of size m x n and an integer k. You need to shift the grid k times
 
+class Solution:
+    def shiftGrid(self, grid: list[list[int]], k: int) -> list[list[int]]:
+        grid = [[1],[2],[3],[4],[7],[6],[5]]                # [[3,8,1,9],      ->     [[12,0,21,13],
+        k = 4                                               # [19,7,2,5],      ->       [3,8,1,9],
+                                                            # [4,6,11,10],     ->       [19,7,2,5],
+        n, m = len(grid), len(grid[0])                      # [12,0,21,13]]    ->       [4,6,11,10]]
+        total = n * m                                                       # k = 4
+        res = [[0 for _ in range(m)] for _ in range(n)]
+        for row in range(n):
+            for col in range(m):
+                new_1d_index = (((row * m) + col) + k) % total   # Total = (m * n) / We use this mod opr. to handle 
+                                                                    # out of bound cases, to wrap to the next available column
+                # To find the index in the 1D array we'll use the formula
+                # R (current row) * N (totql no. of columns) + C (current column)
+                # New index in 1D = {(R * N) + C } + k(given)
+
+                new_row = new_1d_index // m              # 1D arr index to 2D grid[row][col] ->
+                new_column = new_1d_index % m                           # row num = Position in 1D arr // N<-(total n o. of columns)
+                res[new_row][new_column] = grid[row][col]               # col num = position in 1D arr % N<-(total n o. of columns) 
+
+        print(res)
+
+#---------------------------------------------------------------------------------------------------
 
 
 
