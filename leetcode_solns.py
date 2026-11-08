@@ -3442,7 +3442,7 @@ class Solution:                                         # a = 5     binary - 010
 
 # ---------------------------------------------------------------------------------------------------
 # 283. Move Zeroes - Given an integer array nums, move all 0's to the end of it 
-#                    while maintaining the relative order of the non-zero elements. -   DO IT In - Place
+                    # while maintaining the relative order of the non-zero elements. - DO IT In - Place
 nums = [0, 0, 1, 0, 1, 1, 0]
 
 i = 0
@@ -3537,7 +3537,7 @@ while k < n:
 
 # ---------------------------------------------------------------------------------------------------
 # 4079. Prime Subset Selection I - Given n (upper limit for primes), s (maximum allowed sum).
-#       Objective: Maximize the number of selected unique primes such that total sum of primes <= s
+                  # Objective: Maximize the number of selected unique primes such that total sum of primes <= s
 
 class Solution:
     def sieve_of_eratosthenes(self, n):
@@ -3567,7 +3567,7 @@ class Solution:
     
 # ---------------------------------------------------------------------------------------------------
 # 3882. Minimum XOR Path in a Grid - Given a m x n grid filled with non-negative integers, find a path from top-left (0,0) to
-#       bottom-right (m-1, n-1), moving only right or down, which minimizes the bitwise XOR of all values 
+                  # bottom-right (m-1, n-1), moving only right or down, which minimizes the bitwise XOR of all values 
                                # along the path (including both endpoints).
 class Solution:
     def f(self, i, j, grid, dp):
@@ -3601,7 +3601,7 @@ class Solution:
 
 # --------------------------------------------------------------------------------------------------
 # 80. Remove Duplicates from Sorted Array II - Given an integer array nums sorted in non-decreasing order, 
-#     remove some duplicates in-place such that each unique element appears at most twice.
+                    # remove some duplicates in-place such that each unique element appears at most twice.
 
 nums = [1, 1, 2, 2, 2, 3, 4, 4]
 n = len(nums) - 1
@@ -3622,8 +3622,8 @@ while n >= 0:
 
 # --------------------------------------------------------------------------------------------------
 # 1071. Greatest Common Divisor of Strings - Given two strings str1 and str2, return the largest string x 
-#                                            such that x divides both str1 and str2.
-#                                            Input: str1 = "ABABAB", str2 = "ABAB" Output: "AB"
+                                        #    such that x divides both str1 and str2.
+                                        #    Input: str1 = "ABABAB", str2 = "ABAB" Output: "AB"
 s1 = "ABCABC"
 s2 = "ABC"
 flag = False
@@ -3646,7 +3646,7 @@ if flag:
 
 # --------------------------------------------------------------------------------------------------
 # 1207. Unique Number of Occurrences - Given an array of integers arr, return true if the number of occurrences of each value 
-#                                      in the array is unique or false otherwise.
+                                     # in the array is unique or false otherwise.
                                      # arr = [1,2,2,1,1,3] Output: true - The value 1 has 3 occurrences, 
 class Solution:                      # 2 has 2 and 3 has 1. No two values have the same number of occurrences.
     def uniqueOccurrences(self, arr: list[int]) -> bool:
@@ -3667,8 +3667,8 @@ class Solution:                      # 2 has 2 and 3 has 1. No two values have t
 
 # --------------------------------------------------------------------------------------------------
 # 74. Search a 2D Matrix - given an m x n integer matrix, Each row is sorted   | # Tcol -> O(log(n * m))
-#                          The first integer of each row is greater than the last integer of the previous row.
-# Given an integer 'target', return true if target is in matrix or false otherwise.
+                          # The first integer of each row is greater than the last integer of the previous row.
+                          # Given an integer 'target', return true if target is in matrix or false otherwise.
 
 class Solution:          # Input: matrix = [[1,3,5,7],[10,11,16,20],[23,30,34,60]], target = 3 | Output: True
     def searchMatrix(self, matrix: list[list[int]], target: int) -> bool:
@@ -3846,8 +3846,8 @@ class Solution:                 # Exponentiation by Squaring - Tcol - O(logN) - 
 
 #---------------------------------------------------------------------------------------------------
 # 4097. Minimum Value of Merged Integers©leetcode - Given an even-length array nums:
-# • Pair and concatenate adjacent elements (e.g., nums[i] + nums[i+1] for even i).
-# • Return the minimum value among all merged integers.
+            # • Pair and concatenate adjacent elements (e.g., nums[i] + nums[i+1] for even i).
+            # • Return the minimum value among all merged integers.
 
 def minimumValueOfMergedIntegers():
     nums = [23,55,42,21]
@@ -3862,8 +3862,8 @@ def minimumValueOfMergedIntegers():
 
 #---------------------------------------------------------------------------------------------------
 # 453. Minimum Moves to Equal Array Elements - Given an integer array nums of size n, 
-#                             return the minimum number of moves required to make all array elements equal.
-#                             In one move, you can increment n - 1 elements of the array by 1.
+                            # return the minimum number of moves required to make all array elements equal.
+                            # In one move, you can increment n - 1 elements of the array by 1.
 def minMoves(self, nums: list[int]) -> int:
     nums = [-7, -5, -2, -1, 2, 10, 17]      # [-2, -1, 2], can increment all except the val we are 
     # nums = [-1, 0, 1]                                   # trying to converge all the other elements into
@@ -3904,7 +3904,7 @@ def convertToBase7(self, num: int) -> str:
 
 #---------------------------------------------------------------------------------------------------
 # 462. Minimum Moves to Equal Array Elements II - Given an integer array nums of size n, 
-# return the minimum number of moves required to make all array elements equal.
+                       # return the minimum number of moves required to make all array elements equal.
                         # In one move, you can increment or decrement an element of the array by 1.
 class Solution:
     def minMoves2(self, nums: list[int]) -> int:
@@ -3940,7 +3940,7 @@ class Solution:
 
 #---------------------------------------------------------------------------------------------------
 # 1979. Find Greatest Common Divisor of Array - Given an integer array nums, return the GCD of the smallest number 
-#      and largest number in nums.The GCD of two numbers is the largest positive integer that evenly divides both numbers.
+     # and largest number in nums.The GCD of two numbers is the largest positive integer that evenly divides both numbers.
 
 def findGCD(self, nums: list[int]) -> int:
     nums = [3,3]
@@ -3964,8 +3964,8 @@ def findGCD(self, nums: list[int]) -> int:
 
 #---------------------------------------------------------------------------------------------------
 # 1081. Smallest Subsequence of Distinct Characters - Given a string s, return the lexicographically smallest 
-#                                subsequence of s that contains all the distinct characters of s exactly once.
-#                                s = "cbacdcbc" |  Output: "acdb"
+                               # subsequence of s that contains all the distinct characters of s exactly once.
+                               # s = "cbacdcbc" |  Output: "acdb"
 class Solution:
     def smallestSubsequence(self, s: str) -> str:         #  Time - O(N) | Space - O(1)
         maps = {char: i for i, char in enumerate(s)}
@@ -4042,7 +4042,7 @@ class Solution:
         for row in range(n):
             for col in range(m):
                 new_1d_index = (((row * m) + col) + k) % total   # Total = (m * n) / We use this mod opr. to handle 
-                                                                    # out of bound cases, to wrap to the next available column
+                # Jodi 1D array te Shift kori Tahole ki hobe     # out of bound cases, to wrap to the next available column
                 # To find the index in the 1D array we'll use the formula
                 # R (current row) * N (totql no. of columns) + C (current column)
                 # New index in 1D = {(R * N) + C } + k(given)
@@ -4054,14 +4054,121 @@ class Solution:
         print(res)
 
 #---------------------------------------------------------------------------------------------------
+# 830. Positions of Large Groups - In a string s of lowercase letters, Some letters form consecutive 
+            # groups of the same character. Example - s = "abbxxxxzyy" has the groups "a", "bb", "xxxx", "z", and "yy"
+                       #  A group is considered large if it has 3 or more characters. A group is identified by 
+class Solution:        # an interval [start, end], start and end denote the start and end indices (inclusive) of the group.
+    def largeGroupPositions(self, s: str) -> list[list[int]]:
+        i = 0
+        res = []                       # Return the intervals of every large group
+        while i + 2 < len(s):
+            if s[i] == s[i + 1] == s[i + 2]:
+                start = i
+                end = i + 2
+                if i + 3 < len(s):
+                    for j in range(i + 3, len(s)):
+                        if s[i] == s[j]:
+                            end += 1
+                        else:
+                            break
+                res.append([start, end])
+                i = end + 1
+            else:
+                i += 1
+        return res
 
+# sol = Solution()
+# print(sol.largeGroupPositions("aabbbbcccccttuuuv"))
 
+#---------------------------------------------------------------------------------------------------
+# 1267. Count Servers that Communicate - given a map of a server center, represented as a m * n integer matrix grid, 
+# where 1 = server and 0 = no server. Two servers can communicate if they are on the same row or on the same column.
+                # Return the number of servers that communicate with any other server.
+class Solution:
+    def countServers(self, grid: list[list[int]]) -> int:
+        n, m = len(grid), len(grid[0])
+        row_totals = [0] * n                       # [[1,1,1,0],
+        column_totals = [0] * m                    #  [0,0,1,0],     O/P - 4 (multiple servers converging in one server
+        count = 0                                  #  [0,0,1,0],                only get to count Once)
+        for i in range(n):                         #  [0,0,0,1]]
+            for j in range(m):
+                if grid[i][j] == 1:
+                    row_totals[i] += 1
+                    column_totals[j] += 1
 
+        for i in range(n):
+            for j in range(m):
+                if grid[i][j] == 1:
+                    if row_totals[i] > 1 or column_totals[j] > 1:
+                        count += 1
 
+        print(row_totals, column_totals)
+        return count
 
+# sol = Solution()
+# print(sol.countServers([[1,1,1,0],[0,0,1,0],[0,0,1,0],[0,0,0,1]]))
 
+#---------------------------------------------------------------------------------------------------
+# 4106. Find Mismatched Segments Between Two Strings - given two strings s1 and s2 of the same length.
+          # A mismatched segment is contiguous range of indices where the characters of s1 and s2 differ at every index.
+                    #  Return a 2D array containing [sub1, sub2] for each mismatched segment
 
+def findMismatchedSegments(self, s1: str, s2: str) -> list[list[str]]:
+    s1 = "abrakadabbra"
+    s2 = "abacusababcu"
+    res = []
+    maps = {}                   # Input: s1 = "action", s2 = "nation"
+                                # Output: [["ac","na"]]
+    start = end = 0
+    for i in range(len(s1)):
+        if s1[i] != s2[i]:
+            maps[i] = s1[i]
 
+    indexes = []
+    for index in maps.keys():
+        indexes.append(index)
+    print(indexes)
+
+    res = []
+    if indexes != None:
+        start = prev = indexes[0]
+        for i in range(1, len(indexes)):
+            curr = indexes[i]
+            if curr == prev + 1:
+                prev = curr
+            else:
+                res.append([s1[start:prev + 1], s2[start:prev + 1]])
+                start = curr
+                prev = curr
+        res.append([s1[start:prev + 1], s2[start:prev + 1]])
+    print("Result:", res)
+
+#---------------------------------------------------------------------------------------------------
+# 4107. Count Valid Suffix Sorts I - given two integer arrays nums and target, both of length n.
+                # For each index i, consider sorting the suffix nums[i..n - 1] of the original array in non-increasing order
+class Solution:
+    def countSuffix(self, nums: list[int], target: list[int]) -> int:
+        nums = [7,6,8]
+        target = [8, 6, 7]                 # Input: nums = [1,5,6,4,6], target = [1,5,6,6,4]
+        res = []                           # Output: 2
+
+        n = len(nums)
+        prefix = []                       # Our Code Generates - all the suffix reorderd arrays  for the given nums, amd 
+        suffix = []                       # Count the number of matched nums == Target
+        for i in range(n):
+            prefix = nums[0:i]
+            suffix = nums[i:n]
+            suffix_2 = sorted(suffix, reverse=True)
+            res.append(prefix + suffix_2)
+        print(res)
+
+        count = 0
+        for arr in res:
+            if arr == target:
+                count += 1
+        print(count)
+
+#---------------------------------------------------------------------------------------------------
 
 
 
