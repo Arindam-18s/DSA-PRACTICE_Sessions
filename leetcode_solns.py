@@ -4154,9 +4154,9 @@ class Solution:
 
         n = len(nums)
         prefix = []                       # Our Code Generates - all the suffix reorderd arrays  for the given nums, amd 
-        suffix = []                       # Count the number of matched nums == Target
-        for i in range(n):
-            prefix = nums[0:i]
+        suffix = []                # [[6, 6, 5, 4, 1], [1, 6, 6, 5, 4], [1, 5, 6, 6, 4], [1, 5, 6, 6, 4], [1, 5, 6, 4, 6]]
+        for i in range(n):                # Count the number of matched nums == Target , op - 2
+            prefix = nums[0:i]            
             suffix = nums[i:n]
             suffix_2 = sorted(suffix, reverse=True)
             res.append(prefix + suffix_2)
@@ -4169,7 +4169,36 @@ class Solution:
         print(count)
 
 #---------------------------------------------------------------------------------------------------
+# 48. Rotate Image - given an n x n 2D matrix representing an image, rotate the image by 90 degrees (clockwise).
+                    # You have to rotate the image in-place | Time -> O(n^2), Space -> O(1)
+class Solution:
+    def rotate(self, matrix: list[list[int]]) -> None:
+        n = len(matrix)
+        for i in range(n):                      # Step I - Transpose The matrix - In Place Transform: (i, j) -> (j, i)
+            for j in range(i + 1, n):
+                matrix[i][j], matrix[j][i] = matrix[j][i], matrix[i][j]  # [[1,2,3],            [[7,4,1],
+                                                                         #  [4,5,6],    =>       [8,5,2],
+        for k in range(n):                                               #  [7,8,9]]             [9,6,3]]
+            left, right = 0, n - 1              # Step I - Reverse Each Row - In Place  
+            while left < right:                                             # Transform: $(j, i) > (j, n - 1 - i)
+                matrix[k][left], matrix[k][right] = matrix[k][right], matrix[k][left]
+                left += 1
+                right -= 1
 
+#---------------------------------------------------------------------------------------------------
+# 867. Transpose Matrix - Given a 2D integer array matrix, return the transpose of matrix.
+                      # The transpose of a matrix is the matrix flipped over its main diagonal, switching the matrix's row and column indices.
+
+class Solution:                # Time -> 0(R x C), Space -> O(R x C)
+    def transpose(self, matrix: list[list[int]]) -> list[list[int]]:
+        row, column = len(matrix), len(matrix[0])
+        Transposed = [[0 for _ in range(row)]for _ in range(column)]
+        for i in range(row):
+            for j in range(column):
+                Transposed[j][i] = matrix[i][j]
+        return Transposed
+
+#---------------------------------------------------------------------------------------------------
 
 
 

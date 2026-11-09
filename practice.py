@@ -1,32 +1,12 @@
+# 867. Transpose Matrix - Given a 2D integer array matrix, return the transpose of matrix.
+                      # The transpose of a matrix is the matrix flipped over its main diagonal, switching the matrix's row and column indices.
 
-# 4107. Count Valid Suffix Sorts I - given two integer arrays nums and target, both of length n.
-                # For each index i, consider sorting the suffix nums[i..n - 1] of the original array in non-increasing order
-class Solution:
-    def countSuffix(self, nums: list[int], target: list[int]) -> int:
-        nums = [7,6,8]
-        target = [8, 6, 7]                 # Input: nums = [1,5,6,4,6], target = [1,5,6,6,4]
-        res = []                           # Output: 2
-
-        n = len(nums)
-        prefix = []
-        suffix = []
-        for i in range(n):
-            prefix = nums[0:i]
-            suffix = nums[i:n]
-            suffix_2 = sorted(suffix, reverse=True)
-            res.append(prefix + suffix_2)
-
-            # res.append(nums[0:i] + nums[i : n + 1])
-        print(res)
-
-        count = 0
-        for arr in res:
-            if arr == target:
-                count += 1
-
-        print(count)
-
-
-
-
+class Solution:                # Time -> 0(R x C), Space -> O(R x C)
+    def transpose(self, matrix: list[list[int]]) -> list[list[int]]:
+        row, column = len(matrix), len(matrix[0])
+        Transposed = [[0 for _ in range(row)]for _ in range(column)]
+        for i in range(row):
+            for j in range(column):
+                Transposed[j][i] = matrix[i][j]
+        return Transposed
 
