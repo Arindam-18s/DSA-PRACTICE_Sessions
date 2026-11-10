@@ -4199,9 +4199,73 @@ class Solution:                # Time -> 0(R x C), Space -> O(R x C)
         return Transposed
 
 #---------------------------------------------------------------------------------------------------
+# 3693. Climbing Stairs II - climbing a staircase with n + 1 steps, numbered from 0 to n. given a 1-indexed 
+                           # integer array costs of length n, where costs[i] is the cost of step i.
+                           # From step i, you can jump only to step i + 1, i + 2, or i + 3
+                           # The cost of jumping from step i to step j is defined as: costs[j] + (j - i)2
+                           # start from step 0 with cost = 0. Return the minimum total cost to reach step n.
+class Solution:
+    def climbStairs_Tabulation(self, n: int, costs: List[int]) -> int:     # Time -> O(N), Space -> O(N)
+        dp = [-1] * (n + 1)                                                # Tabulation Soln.
+        dp[n] = 0
+        for i in range(n - 1, -1, -1):      
+            cost = float('inf')
+            j = i + 1
+            if j <= n:                                  # Jump of 1 Step
+                cost = (costs[j - 1] + (j - i) * (j - i)) + dp[j]
+            j = i + 2
+            if j <= n:                                  # Jump of 2 Step
+                cost = min(cost, (costs[j - 1] + (j - i) * (j - i)) + dp[j])
+            j = i + 3
+            if j <= n:                                  # Jump of 3 Step
+                cost = min(cost, (costs[j - 1] + (j - i) * (j - i)) + dp[j])
+
+            dp[i] = cost
+        return dp[0] 
 
 
+    def rec_CS_II(self, i, n, dp, costs):                                  # Time -> O(N), Space -> O(N)
+        if i == n:                      #   _____________________________  # Memoization Soln.
+            return 0                    #   |   |   |   |   |   |   |   |
+        if dp[i] != -1:                 #   ````````````````````````````
+            return dp[i]                              #  <---------------               
+        cost = float('-inf')            # Traversing from back to the front Top Down DP
+        j = i + 1
+        if j <= n:                                  # Jump of 1 Step
+            cost = (costs[j - 1] + ((j - i) ** 2)) + self.rec_CS_II(j, n, dp, costs)
+        j = i + 2
+        if j <= n:                                  # Jump of 2 Step
+            cost = min(cost, (costs[j - 1] + ((j - i) ** 2)) + self.rec_CS_II(j, n, dp, costs))
+        j = i + 3
+        if j <= n:                                  # Jump of 3 Step
+            cost = min(cost, (costs[j - 1] + ((j - i) ** 2)) + self.rec_CS_II(j, n, dp, costs))
 
+        dp[i] = cost
+        return dp[i]
+
+    def climbStairs(self, n: int, costs: List[int]) -> int:
+        dp = [-1] * n
+        return self.rec_CS_II(0, n, dp, costs)
+
+# --------------------------------------------------------------------------------------------------
+# 203. Remove Linked List Elements - Given the head of a linked list and an integer val, remove all the nodes 
+                               #   of the linked list that has Node.val == val, and return the new head.
+
+def removeElements(self, head: ListNode | None, val: int) -> ListNode | None:
+    temp = head
+    dummy = ListNode()
+    dummy.next = head          #   head = [1,2,6,3,4,5,6], val = 6 Output: [1,2,3,4,5]
+    prev = dummy
+    while temp:
+        if temp.val == val:
+            prev.next = temp.next
+            temp = temp.next
+        else:
+            prev = temp
+            temp = temp.next
+    return dummy.next
+
+# ---------------------------------------------------------------------------------------------------
 
 
 

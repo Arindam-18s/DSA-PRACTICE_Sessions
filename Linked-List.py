@@ -5,7 +5,7 @@ class SinglyNode:
         self.next = next
     def __str__(self):
         return str(self.val)
-    
+
 Head = SinglyNode(1)        # head[1]--->A[4]--->B[6]--->C[9]
 A = SinglyNode(4)
 B = SinglyNode(6)
@@ -44,7 +44,7 @@ def search(Head, val):
 
 search(Head, 8)
 
-#---------------------------------------------------------------------------------------------------
+# ---------------------------------------------------------------------------------------------------
 # Doubly linked list
 
 class DoublyNode:
@@ -55,7 +55,7 @@ class DoublyNode:
 
     def __str__(self):
         return str(self.val)
-    
+
 
 def displayDoubly(head):
     curr = head
@@ -87,7 +87,7 @@ def insert_at_end(head, tail, val):
 
 head, tail = insert_at_end(head, tail, 8)
 displayDoubly(head)
-#---------------------------------------------------------------------------------------------------
+# ---------------------------------------------------------------------------------------------------
 # Middle of a linked list (Using Slow-Fast Approach)
 
 class Solution(object):
@@ -99,8 +99,8 @@ class Solution(object):
             slow = slow.next          # Moves 1 step
             fast = fast.next.next     # Moves 2 step
         return slow
-#---------------------------------------------------------------------------------------------------
-# 61. Rotate List 
+# ---------------------------------------------------------------------------------------------------
+# 61. Rotate List
 
 class ListNode:
     def __init__(self, val=0, next=None):
@@ -139,7 +139,7 @@ head = ListNode(1, node2)  # This is the front of your list
 sol = Solution()    # 3. Instantiate the Solution class
 
 rotated_head = sol.rotateRight(head, k=2)   # 4. Call the method
-#---------------------------------------------------------------------------------------------------
+# ---------------------------------------------------------------------------------------------------
 # 141. Linked List Cycle
 
 class ListNode:
@@ -159,7 +159,7 @@ class Solution:
             if slowPointer == fastPointer:
                 return True
         return False
-#---------------------------------------------------------------------------------------------------
+# ---------------------------------------------------------------------------------------------------
 # Reversing a Linked List
 
 def reverseList(head):     # O(n) Time, 0(1) Space
@@ -172,8 +172,8 @@ def reverseList(head):     # O(n) Time, 0(1) Space
         curr = next_temp
     return prev
 
-#---------------------------------------------------------------------------------------------------
-# 234. Palindrome Linked List - Given the head of a singly linked list, return true if it is a palindrome 
+# ---------------------------------------------------------------------------------------------------
+# 234. Palindrome Linked List - Given the head of a singly linked list, return true if it is a palindrome
 #                               or false otherwise. - Tcol -> O(n), Space -> O(1)
 class Solution:
     def isPalindrome(self, head: ListNode | None) -> bool:
@@ -201,7 +201,7 @@ class Solution:
                 return False
         return True
 
-#---------------------------------------------------------------------------------------------------
+# ---------------------------------------------------------------------------------------------------
 # Question - Given Head of a LinkedList And a num, eleminate all the listnodes with value < that given num, and return the List
 
 # head = ListNode(3)        # head[3]--->A[5]--->B[1]--->C[6]--->D[7]
@@ -236,311 +236,22 @@ while result:
     print(result.val , end=" -> ")
     result = result.next
 
-#---------------------------------------------------------------------------------------------------
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+# ---------------------------------------------------------------------------------------------------
+# 203. Remove Linked List Elements - Given the head of a linked list and an integer val, remove all the nodes 
+                               #   of the linked list that has Node.val == val, and return the new head.
+
+def removeElements(self, head: ListNode | None, val: int) -> ListNode | None:
+    temp = head
+    dummy = ListNode()
+    dummy.next = head          #   head = [1,2,6,3,4,5,6], val = 6 Output: [1,2,3,4,5]
+    prev = dummy
+    while temp:
+        if temp.val == val:
+            prev.next = temp.next
+            temp = temp.next
+        else:
+            prev = temp
+            temp = temp.next
+    return dummy.next
+
+# ---------------------------------------------------------------------------------------------------
