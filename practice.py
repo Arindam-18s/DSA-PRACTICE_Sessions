@@ -1,42 +1,19 @@
-class Solution:
-    def climbStairs_Tabulation(self, n: int, costs: List[int]) -> int:     # Time -> O(N), Space -> O(N)
-        dp = [-1] * (n + 1)
-        dp[n] = 0
-        for i in range(n - 1, -1, -1):
-            cost = float('inf')
-            j = i + 1
-            if j <= n:                                  # Jump of 1 Step
-                cost = (costs[j - 1] + (j - i) * (j - i)) + dp[j]
-            j = i + 2
-            if j <= n:                                  # Jump of 2 Step
-                cost = min(cost, (costs[j - 1] + (j - i) * (j - i)) + dp[j])
-            j = i + 3
-            if j <= n:                                  # Jump of 3 Step
-                cost = min(cost, (costs[j - 1] + (j - i) * (j - i)) + dp[j])
+# 171. Excel Sheet Column Number - Given a string columnTitle that represents the column title as appears in an Excel sheet, 
+     # return its corresponding column number. 1 <= columnTitle.length <= 7, columnTitle consists only of uppercase English letters.
+                    # columnTitle is in the range ["A", "FXSHRXW"].
+class Solution:     # columnTitle = "AB"  Output: 28  |  Input: columnTitle = "ZY"  Output: 701
+    def titleToNumber(self, columnTitle: str) -> int:
+        maps = {
+            "A": 1, "B": 2, "C":3, "D":4, "E":5, "F":6, "G":7, "H":8, "I":9, "J":10, "K":11, "L":12,
+            "M":13, "N":14, "O":15, "P":16, "Q":17, "R":18, "S":19, "T":20, "U":21, "V":22, "W":23,
+            "X":24, "Y":25, "Z":26
+        }
+        n = len(columnTitle)
+        if n == 1:
+            return maps[columnTitle]
+        ans = 0
+        for i in range(len(columnTitle)):
+            ans += maps[columnTitle[i]] * (26 ** (n - 1))
+            n -= 1
+        return ans
 
-            dp[i] = cost
-        return dp[0] 
-
-
-    def rec_CS_II(self, i, n, dp, costs):                                  # Time -> O(N), Space -> O(N)
-        if i == n:                      #   _____________________________
-            return 0                    #   |   |   |   |   |   |   |   |
-        if dp[i] != -1:                 #   ````````````````````````````
-            return dp[i]                              #  <---------------               
-        cost = float('-inf')            # Traversing from back to the front Top Down DP
-        j = i + 1
-        if j <= n:                                  # Jump of 1 Step
-            cost = (costs[j - 1] + ((j - i) ** 2)) + self.rec_CS_II(j, n, dp, costs)
-        j = i + 2
-        if j <= n:                                  # Jump of 2 Step
-            cost = min(cost, (costs[j - 1] + ((j - i) ** 2)) + self.rec_CS_II(j, n, dp, costs))
-        j = i + 3
-        if j <= n:                                  # Jump of 3 Step
-            cost = min(cost, (costs[j - 1] + ((j - i) ** 2)) + self.rec_CS_II(j, n, dp, costs))
-
-        dp[i] = cost
-        return dp[i]
-
-    def climbStairs(self, n: int, costs: List[int]) -> int:
-        dp = [-1] * n
-        return self.rec_CS_II(0, n, dp, costs)

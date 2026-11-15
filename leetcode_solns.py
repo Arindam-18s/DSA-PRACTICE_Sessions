@@ -4266,12 +4266,44 @@ def removeElements(self, head: ListNode | None, val: int) -> ListNode | None:
     return dummy.next
 
 # ---------------------------------------------------------------------------------------------------
+# 171. Excel Sheet Column Number - Given a string columnTitle that represents the column title as appears in an Excel sheet, 
+     # return its corresponding column number. 1 <= columnTitle.length <= 7, columnTitle consists only of uppercase English letters.
+                    # columnTitle is in the range ["A", "FXSHRXW"].
+class Solution:     # columnTitle = "AB"  Output: 28  |  Input: columnTitle = "ZY"  Output: 701
+    def titleToNumber(self, columnTitle: str) -> int:
+        maps = {
+            "A": 1, "B": 2, "C":3, "D":4, "E":5, "F":6, "G":7, "H":8, "I":9, "J":10, "K":11, "L":12,
+            "M":13, "N":14, "O":15, "P":16, "Q":17, "R":18, "S":19, "T":20, "U":21, "V":22, "W":23,
+            "X":24, "Y":25, "Z":26
+        }
+        n = len(columnTitle)
+        if n == 1:
+            return maps[columnTitle]
+        ans = 0
+        for i in range(len(columnTitle)):
+            ans += maps[columnTitle[i]] * (26 ** (n - 1))
+            n -= 1
+        return ans
 
+# ---------------------------------------------------------------------------------------------------
+# 3364. Minimum Positive Sum Subarray given an integer array nums and two integers l and r. Your task is to find 
+        # the minimum sum of a subarray whose size is between l and r (inclusive) and whose sum is greater than 0.
 
+class Solution:
+    def minimumSumSubarray(self, nums: List[int], l: int, r: int) -> int:
+        min_sum = float('inf')
+                                        # Input: nums = [3, -2, 1, 4], l = 2, r = 3  |  Output: 1
+        for i in range(len(nums)):      # [3, -2] sum - 1 , [1, 4] sum - 5, [3, -2, 1] sum - 2, [-2, 1, 4] sum - 3
+            curr_sum = 0                # the subarray [3, -2] has a sum of 1, which is the smallest positive sum.
+            for j in range(i, len(nums)):
+                curr_sum += nums[j]
+                if j - i + 1 >= l and j - i + 1 <= r:
+                    if curr_sum > 0:
+                        min_sum = min(min_sum, curr_sum)
+                
+        return min_sum if min_sum > 0 and min_sum != float('inf') else -1
 
-
-
-
+# ---------------------------------------------------------------------------------------------------
 
 
 
