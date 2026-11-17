@@ -1,19 +1,17 @@
-# 171. Excel Sheet Column Number - Given a string columnTitle that represents the column title as appears in an Excel sheet, 
-     # return its corresponding column number. 1 <= columnTitle.length <= 7, columnTitle consists only of uppercase English letters.
-                    # columnTitle is in the range ["A", "FXSHRXW"].
-class Solution:     # columnTitle = "AB"  Output: 28  |  Input: columnTitle = "ZY"  Output: 701
-    def titleToNumber(self, columnTitle: str) -> int:
-        maps = {
-            "A": 1, "B": 2, "C":3, "D":4, "E":5, "F":6, "G":7, "H":8, "I":9, "J":10, "K":11, "L":12,
-            "M":13, "N":14, "O":15, "P":16, "Q":17, "R":18, "S":19, "T":20, "U":21, "V":22, "W":23,
-            "X":24, "Y":25, "Z":26
-        }
-        n = len(columnTitle)
-        if n == 1:
-            return maps[columnTitle]
-        ans = 0
-        for i in range(len(columnTitle)):
-            ans += maps[columnTitle[i]] * (26 ** (n - 1))
-            n -= 1
-        return ans
+s = "00000000"
+k = 3
+chunk_sum = 0
 
+while len(s) > k:
+    temp_s = ""
+    for i in range(0, len(s), k):
+        chunk_sum = 0
+        j = i
+        while j < i + k and j < len(s):
+            chunk_sum += int(s[j])
+            j += 1
+        print(chunk_sum)
+        temp_s += str(chunk_sum)
+    s = temp_s
+
+print(s)
