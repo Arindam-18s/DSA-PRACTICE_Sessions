@@ -285,3 +285,61 @@ if __name__ == "__main__":
     # print(sol.remove_duplicates_from_sorted_array(array2))
 
 # -------------------------------------------------------------------------------
+# Given an array arr[], Left rotate an array by 1 place
+
+def left_rotate_Array_by_1_Place(array):   # Tcol - O(N), Scol - Space used - (O(N)) cause we are using the existing array
+    temp = array[0]                                             #Extra Space - O(1)
+    i, j = 0, 1
+    while(j < len(array)):
+        array[i] = array[j]                # array = [1, 2, 3, 4, 5, 6], O/p = [2, 3, 4, 5, 6, 1]
+        i += 1
+        j += 1
+    array[len(array) - 1] = temp
+    return array
+
+# -------------------------------------------------------------------------------
+# Given an array arr[], Left rotate an array by `D`  places 
+
+                                          # Tcol - O(len(array) + D), Scol - Extra Space -> O(D)
+def left_rotate_Array_by_D_Places(D, array):
+    if D > len(array):          # If D is larger than length of the array, then we only rotate to places until
+        D = D % len(array)      # the mod of D % n = Extra plcs., cause Rotating N places is just getting the same Arr back
+
+    temp = []
+    for j in range(D):          # Storing the places that we are actually gonna append at the last of the array
+        temp.append(array[j])              
+                                            # array = [1, 2, 3, 4, 5, 6] , D = 8    |    O/P = [3, 4, 5, 6, 1, 2]
+    i, j = 0, D
+    while(j < len(array)):      # Rotating the array until Len(array) - D places
+        array[i] = array[j]
+        i += 1
+        j += 1
+
+    inserting_index = len(array) - D    
+    k = 0
+    while(inserting_index < len(array)):    # Putting the the remaining D elements to the back of the main array
+        array[inserting_index] = temp[k]    # To complete the rotation
+        inserting_index += 1
+        k += 1
+    return array
+
+def left_rotate_Array_by_D_Places_Optimal_Soln(D, array):
+    if D > len(array):          # If D is larger than length of the array, then we only rotate to places until
+        D = D % len(array)      # the mod of D % n = Extra plcs., cause Rotating N places is just getting the same Arr back
+
+    array = reverse(0, D)
+    array = reverse(D, len(array))
+    array = reverse(0, len(array))
+    def reverse(start, end):
+        while start <= end:
+            array[start], array[end] = array[end], array[start]
+            start += 1
+            end -= 1
+    return array
+
+# -------------------------------------------------------------------------------
+
+if __name__ == "__main__":
+    array = [1, 2, 3, 4, 5, 6]
+    print(left_rotate_Array_by_D_Places(8, array))
+    print(left_rotate_Array_by_D_Places_Optimal_Soln(8, array))
