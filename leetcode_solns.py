@@ -19,7 +19,7 @@ class Solution(object):
         return num_str == rev
 
 # -------------------------------------------------
-#Roman to Integer
+# Roman to Integer
 
 s = "LXXIX"
 roman_map = {'I': 1, 'V': 5, 'X': 10, 'L': 50, 'C': 100, 'D': 500, 'M': 1000}   # HashMap(dictionary)
@@ -476,6 +476,7 @@ class Solution:
 
 # ------------------------------------------------- 
 # 507. Perfect Number
+
 class Solution:
     def checkPerfectNumber(self, num: int) -> bool:
         if (num == 1):
@@ -908,16 +909,57 @@ print(find("20"))
 # ------------------------------------------------- 
 # 268. Missing Number - Input: nums = [9,6,4,2,3,5,7,0,1] Output: 8
 
-class Solution:
-    def missingNumber(self, nums: List[int]) -> int:
-        res = len(nums)
+class Solution:             # Brute Force Approach - Pythonic / Tcol - O(N*N), Space - O(1)
+    def missingNumber_brute_Force(self, nums: list[int]) -> int:
+        N = len(nums)
+        for i in range(0, N + 1):
+            if i not in nums:
+                return i
+            
+                            # Brute Force Approach - Language Independent / Tcol - O(N*N), Space - O(1)
+    def missingNumber_brute_Force_2(self, nums: list[int]) -> int:
+        N = len(nums)
+        for i in range(N + 1):
+            flag = 0
+            for j in range(N):
+                if nums[j] == i:
+                    flag = 1
+                    break
+            if flag == 0:
+                return i
+            
+                            # Better Approach - Using A Single Hash Array, which keeps track of whats in the Original Arr. 
+    def missingNumber_Hash_Array_Optimal(self, nums: list[int]) -> int:     # And Marks Which element is not in the Orignl
+        N = len(nums)
+        hash_array = [0] * (N + 1)                 # Tcol - O(2N)  /  Scol - O(N)
+        for i in range(N):
+            hash_array[nums[i]] = 1
 
-        for i in range(len(nums)):
-            res += (i - nums[i])
-        return res
+        for i in range(len(hash_array)):
+            if hash_array[i] == 0:
+                return i
+            
+                        # Optimal Solution 1 : Mathematical Soln. - Missing Num = (Sum of the first N Natural Numbers -
+    def missingNumber(self, nums: list[int]) -> int:   #                        Sum of the elements in the current Array)
+        N = len(nums)                                   
+        Sum_of_the_first_N_Natural_Numbers = (N * (N + 1)) // 2     # Tcol - O(N)  /  Scol - O(1)
+        Sum_of_current_Array = sum(nums)
+        return Sum_of_the_first_N_Natural_Numbers - Sum_of_current_Array
 
-# ------------------------------------------------- 
-# 190. Reverse Bits - I/p: n = 43261596 O/p: 964176192 00000010100101000001111010011100 -> 00111001011110000010100101000000
+                        # Optimal Solution 2 : XoR-ing Approach - (XOR of all the Numbers from 0 to N) ^ 
+    def missingNumber(self, nums: list[int]) -> int:                    # (XOR of all the numbers of nums array)
+        N = len(nums)                                                   # = Mising Number 
+        XOR1 = 0                                    # Tcol - O(2*N)
+        for i in range(N + 1):          # Xoring Same Numbers Gives 0 -> 2 ^ 2 =0
+            XOR1 = XOR1 ^ i             # Xoring 0 and Any other number Gives that Number
+                                        # In that Logic ~  1 , 2 , 3 , 4 , 5
+        XOR2 = 0                        #                  ^   ^   ^   ^   ^
+        for j in range(N):              #               ~  1 , 2 ,   , 4 , 5
+            XOR2 = XOR2 ^ nums[j]       #                  0 ^ 0 ^ 3 ^ 0 ^ 0  -->  3 (The Missing Number)
+        return XOR1 ^ XOR2
+
+# -------------------------------------------------------------------------------------------------------------------------------------
+# 190. Reverse Bits - I/p: n = 43261596 O/p: 964176192 (00000010100101000001111010011100 -> 00111001011110000010100101000000)
 
 class Solution:
     def reverseBits(self, n: int) -> int:
@@ -1979,9 +2021,10 @@ for i in range(len(nums) - 1, -1, -1):
         k -= 1
 
 del_el_count = original_length - k
-print(nums.extend([0] * del_el_count))
+# print(nums.extend([0] * del_el_count))
 
-print(nums, k)
+# print(nums, k)
+
 #---------------------------------------------------------------------------------------------------
 # 678. Valid Parenthesis String | s containing -> '(', ')' and '*', '*' could be ')' or '(' or an empty string "".
 #                                              ex - Input: s = "(*))" Output: true
@@ -2034,8 +2077,8 @@ def evaluate_postfix_space(expression: str) -> float:
     return stack[-1]
 
 # --- Test Cases ---
-print(evaluate_postfix_space("12 3 /"))       # Output: 4.0
-print(evaluate_postfix_space("100   25 / 5 +")) # Output: 9.0 (Handles extra spaces perfectly!)
+# print(evaluate_postfix_space("12 3 /"))       # Output: 4.0
+# print(evaluate_postfix_space("100   25 / 5 +")) # Output: 9.0 (Handles extra spaces perfectly!)
 
 #---------------------------------------------------------------------------------------------------
 # 3870. Count Commas in Range - Return the total number of commas used when writing all integers from [1, n]
@@ -2782,21 +2825,30 @@ for i, char in enumerate(s):
             print(f"current valid : {i} - {stack[-1]} : ", current_valid)
             max_valid = max(max_valid, current_valid)
 
-print(f"max valid parenthesis string size is : {max_valid}")
+# print(f"max valid parenthesis string size is : {max_valid}")
 
 #---------------------------------------------------------------------------------------------------
 # 136. Single Number - Given a non-empty array of integers nums, every element appears twice except for one. 
                      # Find that single one. - Constant Space, and linear Time
 
 nums = [4,1,2,1,2]
-
+                # Better Approach - Time Complexity: O(N), Space Col - O(N)
 freq = {}
 for n in nums:
     if n not in freq:
         freq[n] = 1
     elif n in freq:
         del freq[n]
-print(next(iter(freq)))
+# print(next(iter(freq)))
+
+                # Optimal Approach - Using XOR Logic -  Time Complexity: O(N), Space Col - O(1)
+class Solution:             
+    def singleNumber(self, nums: list[int]) -> int:
+        N = len(nums)                               # Xoring Same Numbers Gives 0 -> 2 ^ 2 = 0
+        single_num = nums[0]                        # Xoring 0 and Any other number Gives that Number -> 0 ^ 2 = 2
+        for i in range(1, N):                       # By that logic, For this - [1, 1, 2, 3, 3, 4, 4]
+            single_num = single_num ^ nums[i]       # 1 ^ 1 = 0 | 4 ^ 4 = 0 | 3 ^ 3 = 0 | At last 0 ^ 2 = 2, We Return 2
+        return single_num
 
 #---------------------------------------------------------------------------------------------------
 # 921. Return the minimum number of moves required to make s valid. -- s = "()))(("  Output - 4
@@ -3617,6 +3669,7 @@ while n >= 0:
     elif nums[n] in maps and maps[nums[n]] >= 2:
         nums.pop(n)
     n -= 1
+
 # print(k)
 # print(nums)
 
@@ -4304,10 +4357,115 @@ class Solution:
         return min_sum if min_sum > 0 and min_sum != float('inf') else -1
 
 # ---------------------------------------------------------------------------------------------------
+# 2567. Minimum Score by Changing Two Elements - given an integer array nums. The low score of nums is the 
+        # minimum absolute difference between any two integers.The high score of nums is the maximum absolute difference 
+        # between any two integers.The score of nums is the sum of the high and low scores.
+                            # Return the minimum score after changing two elements of nums.
+class Solution:
+    def minimizeSum(self, nums: List[int]) -> int:
+        """ Since we can modify up to two elements to match any existing values,
+            we can make the minimum possible difference (low score) 0, leaving only
+            the maximum difference (high score) to minimize."""
+        
+        nums.sort()     # Sort the array in ascending order to easily access the smallest and largest elements
+        n = len(nums)
 
+        # To minimize the range (max - min), we only consider modifying elements at the extremes.
+        # There are three optimal ways to remove/change two extreme elements:
 
+        # Case 1: Change the smallest element (nums[0]) and the largest element (nums[n - 1]).
+        min1 = abs(nums[n - 2] - nums[1])   # The new range is determined by the second-smallest and second-largest elements.
 
+        # Case 2: Change the two largest elements (nums[n - 1] and nums[n - 2]).
+        min2 = abs(nums[n - 3] - nums[0])   # The new range is determined by the smallest and third-largest elements.
 
+        # Case 3: Change the two smallest elements (nums[0] and nums[1]).
+        min3 = abs(nums[n - 1] - nums[2])   # The new range is determined by the third-smallest and largest elements.
+        return min(min1, min2, min3)        # Return the minimum possible range among all three cases
+
+# ---------------------------------------------------------------------------------------------------
+# 703. Kth Largest Element in a Stream - Design a system to dynamically track and retrieve the Kth highest score 
+#      from a continuous stream of incoming data (such as university applicant test scores) in real time.
+     # Implement a KthLargest class with the following methods: 
+     # KthLargest(int k, int[] nums): Initializes the tracker with a target rank k and an initial collection of scores nums.
+     # int add(int val): Appends a new score val to the existing pool and returns the updated kth 
+                                                    # largest score overall (including duplicates).
+import heapq
+class KthLargest:                   # Min Heap Approach - Tcol - O(N log k), Scol - O(k)  
+    def __init__(self, k: int, nums: list[int]):
+        self.nums = nums
+        self.k = k
+        self.data = []
+        heapq.heapify(self.data)
+        for i in range(len(self.nums)):
+            heapq.heappush(self.data, self.nums[i])
+
+    def add(self, val: int) -> int:
+        heapq.heappush(self.data, val)
+        while len(self.data) > self.k:
+            heapq.heappop(self.data)
+            
+        return self.data[0]
+
+# ---------------------------------------------------------------------------------------------------
+# 215. Kth Largest Element in an Array - Given an integer array nums and an integer k, return the kth largest element in the array.
+     # Note that it is the kth largest element in the sorted order, not the kth distinct element.
+
+class Solution:     # Brute Force Approach - Tcol - O(N Log N), Scol - O(N)
+    def findKthLargest(self, nums: list[int], k: int) -> int:
+        nums.sort()
+        arr = nums[::-1]
+        if k == 1:
+            return arr[0]
+        return arr[k - 1] if k - 1 else -1
+
+#   Follow Up - Can you solve it without sorting?
+# ```````````````````````````````````````````````` -- Min Heap Approach - Tcol - O(N log k), Scol - O(k)
+import heapq              
+class Solution:
+    def findKthLargest(self, nums: list[int], k: int) -> int:
+        data = []
+        heapq.heapify(data)
+        for i in range(len(nums)):
+            heapq.heappush(data, nums[i])
+            if len(data) > k:
+                heapq.heappop(data)
+        return data[0]
+
+                    # Optimal Approach For Interviews, Implementation using Quick Select Algo
+
+class Solution:                          # Tcol - O(N*N) <- Worst Case, O(N) <- Avg. Case    |   Scol - O(1), In place
+    def partition_algorithm(self, L, R, nums):
+        P = nums[L]
+        i, j = L + 1, R
+        while i <= j:
+            if nums[i] < P and nums[j] > P:
+                nums[i], nums[j] = nums[j], nums[i]
+                i += 1
+                j -= 1
+            if nums[i] >= P:
+                i += 1
+            if nums[j] <= P:
+                j -= 1
+        nums[L], nums[j] = nums[j], nums[L]
+        return j
+    def findKthLargest(self, nums: list[int], k: int) -> int:
+        N = len(nums)
+        L = 0
+        R = N - 1
+        pivotIndex = 0
+        while True:
+            pivotIndex = self.partition_algorithm(L, R, nums)
+            if pivotIndex == (k - 1):      # Cause its a 1 indexed array
+                break  
+            elif pivotIndex >= (k - 1):
+                R = pivotIndex - 1  # Searching left side of the current pivot
+            else:
+                L = pivotIndex + 1  # Searching right side of the current pivot   
+
+        return nums[pivotIndex]
+
+# -----------------------------------------------------------------------------------------------------------
 
 
 

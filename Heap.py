@@ -100,3 +100,44 @@ l2 = [15, 25, 35, 45, 55]
 
 l3 = heapq.merge(l1, l2)
 # print(list(l3))
+
+# ----------------------------------------------------------------------------------------------------------------------------------
+# 215. Kth Largest Element in an Array - Given an integer array nums and an integer k, return the kth largest element in the array.
+     # Note that it is the kth largest element in the sorted order, not the kth distinct element.
+
+# Min Heap Approach - Tcol - O(N log k), Scol - O(k)       
+class Solution:
+    def findKthLargest(self, nums: list[int], k: int) -> int:
+        data = []
+        heapq.heapify(data)
+        for i in range(len(nums)):
+            heapq.heappush(data, nums[i])
+            if len(data) > k:
+                heapq.heappop(data)
+        return data[0]
+
+# ---------------------------------------------------------------------------------------------------
+# 703. Kth Largest Element in a Stream - Design a system to dynamically track and retrieve the Kth highest score 
+#      from a continuous stream of incoming data (such as university applicant test scores) in real time.
+     # Implement a KthLargest class with the following methods: 
+     # KthLargest(int k, int[] nums): Initializes the tracker with a target rank k and an initial collection of scores nums.
+     # int add(int val): Appends a new score val to the existing pool and returns the updated kth 
+                                                    # largest score overall (including duplicates).
+import heapq
+class KthLargest:                   # Min Heap Approach - Tcol - O(N log k), Scol - O(k)  
+    def __init__(self, k: int, nums: list[int]):
+        self.nums = nums
+        self.k = k
+        self.data = []
+        heapq.heapify(self.data)
+        for i in range(len(self.nums)):
+            heapq.heappush(self.data, self.nums[i])
+
+    def add(self, val: int) -> int:
+        heapq.heappush(self.data, val)
+        while len(self.data) > self.k:
+            heapq.heappop(self.data)
+            
+        return self.data[0]
+
+# ---------------------------------------------------------------------------------------------------
