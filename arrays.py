@@ -731,9 +731,70 @@ def subArr_sum_eq_K():                             #   [ -104 ≤ arr[i] ≤ 104
     print(max_length)
 
 # ---------------------------------------------------------------------------------------------------
+# 1 - Two SUM - You are given an array of integers nums and an integer target, 
+              # return indices of the two numbers such that they add up to target.
 
+class Solution:                            # Time Complexity: O(N), Space Complexity: O(N)
+    def twoSum(self, nums: list[int], target: int) -> list[int]:
+        N = len(nums)
+        hash_map = {}                      # will store {value: index}
+        for i in range(N):
+            complement = target - nums[i]  # For each number, check if its "complement" (the number needed to  
+            if complement in hash_map:     # reach the target) has already been seen. If yes, you found your pair. If no, 
+                return [hash_map[nums[complement]],i]
+            hash_map[complement] = i       # remember this number's value and index for future checks.
+        return -1
 
+# ---------------------------------------------------------------------------------------------------
+# 75. Sort Colors - You are given an array nums with n objects colored red, white, or blue, sort them in-place 
+                  # so that objects of the same color are adjacent, with the colors in the order red, white, and blue. 
+                  # We will use the integers 0, 1, and 2 to represent the color red, white, and blue, respectively.
+                                        # You must solve this problem without using the library's sort function.
+class Solution:
+    def sortColors(self, nums: list[int]) -> None:      # Better Soln. Two Passes - With Individual Counts and Overwrite
+        N = len(nums)                                   #   Time Complexity: O(N), Space Complexity: O(N)
+        Zero_count = One_count = Two_count = 0
+        for i in range(N):
+            if nums[i] == 0:
+                Zero_count += 1
+            elif nums[i] == 1:
+                One_count += 1
+            else:
+                Two_count += 1
+        for j in range(N):
+            if Zero_count > 0:
+                nums[j] = 0
+                Zero_count -= 1
+            elif One_count > 0:
+                nums[j] = 1
+                One_count -= 1
+            else:
+                nums[j] = 2
+                Two_count -= 1
+        return nums
 
+                                        # Optimal Soln - Using the Dutch National Flag Algorithm
+    def sortColors_Dutch_National_Flag_Soln(self, nums: list[int]) -> None: # Time Complexity: O(N), Space Complexity: O(1)
+        N = len(nums)
+        # Initialize three pointers to partition the array into four regions:
+            # [0 ... low-1]   -> all 0s
+            # [low ... mid-1] -> all 1s
+            # [mid ... high]  -> unknown/unprocessed elements
+            # [high+1 ... N-1]-> all 2s
+        low = mid = 0
+        high = N - 1
+        while mid <= high:          # Process elements until the unknown region is completely exhausted
+            if nums[mid] == 0:
+                nums[mid], nums[low] = nums[low], nums[mid]   # Move 0 to the front partition and expand both 0s and 1s boundaries
+                low += 1
+                mid += 1
+            elif nums[mid] == 1:    # 1 is already in the correct middle region; just advance mid
+                mid += 1
+            else:                   # nums[mid] == 2: Move 2 to the back partition and shrink the unknown region.
+                nums[mid], nums[high] = nums[high], nums[mid]
+                high -= 1           # Do NOT increment mid here because the swapped element from high is still unprocessed
+
+# -----------------------------------------------------------------------------------------------------------
         
 
 

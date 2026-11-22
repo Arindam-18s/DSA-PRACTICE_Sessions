@@ -1,15 +1,20 @@
-# Two SUM
-def Two_sum():
-    seen = {}  # will store {value: index}
+# 1 - Two SUM - You are given an array of integers nums and an integer target, 
+              # return indices of the two numbers such that they add up to target.
 
-    for i, num in enumerate(nums):
-        complement = target - num  # For each number, check if its "complement" (the number needed to reach the target) 
-        if complement in seen:     # has already been seen.If yes, you found your pair. If no, 
-            print [seen[complement], i] # remember this number's value and index for future checks.
-        seen[num] = i
+class Solution:                            # Time Complexity: O(N), Space Complexity: O(N)
+    def twoSum(self, nums: list[int], target: int) -> list[int]:
+        N = len(nums)
+        hash_map = {}                      # will store {value: index}
+        for i in range(N):
+            complement = target - nums[i]  # For each number, check if its "complement" (the number needed to  
+            if complement in hash_map:     # reach the target) has already been seen. If yes, you found your pair. If no, 
+                return [hash_map[nums[i]],i]
+            hash_map[complement] = i       # remember this number's value and index for future checks.
+        return -1
 
 # -------------------------------------------------
 # Palindrome
+
 class Solution(object):
     def isPalindrome(self, x):
         num = x
@@ -4466,7 +4471,96 @@ class Solution:                          # Tcol - O(N*N) <- Worst Case, O(N) <- 
         return nums[pivotIndex]
 
 # -----------------------------------------------------------------------------------------------------------
+# 2124. Check if All A's Appears Before All B's - Given a string s consisting of only the characters 'a' and 'b', 
+        # return true if every 'a' appears before every 'b' in the string. Otherwise, return false.
+            
+class Solution:     # Examples ->  s = "aaabbb"  |  O/p: true ;  s = "abab"  |  O/p: false  ;  s = "bbb"  |  O/p: true
+    def checkString(self, s: str) -> bool:
+        break_point = 0
+        for i in range(len(s) - 1, -1, -1):
+            if s[i] == "a":
+                break_point = i
+                break
+        if break_point == 0:
+            return True
+        for i in range(break_point + 1):
+            if s[i] == "b":
+                return False
+        return True
 
+# -----------------------------------------------------------------------------------------------------------
+# 4120. Count Dominant Elements - Given an integer array nums, return the count of dominant elements—elements 
+    # that are greater than or equal to the average of their existing immediate neighbors (nums[i - 1] and nums[i + 1]). 
+                    # A single element with no neighbors is considered dominant.
+class Solution:
+    def countDominantElements(self, nums: list[int]) -> int:
+        N = len(nums)
+        count = 0 
+        for i in range(N):
+            if (i - 1) > -1:
+                if (i + 1) < N:
+                    if ((nums[i - 1] + nums[i + 1]) / 2) <= nums[i]:
+                        count += 1
+                else:
+                    if nums[i] >= nums[i - 1]:
+                        count += 1
+            elif (i + 1) < N:
+                if nums[i] >= nums[i + 1]:
+                    count += 1
+            else:
+                count += 1
+        return count
+
+# -----------------------------------------------------------------------------------------------------------
+# 75. Sort Colors - You are given an array nums with n objects colored red, white, or blue, sort them in-place 
+                  # so that objects of the same color are adjacent, with the colors in the order red, white, and blue. 
+                  # We will use the integers 0, 1, and 2 to represent the color red, white, and blue, respectively.
+                                        # You must solve this problem without using the library's sort function.
+class Solution:
+    def sortColors(self, nums: list[int]) -> None:      # Better Soln. Two Passes - With Individual Counts and Overwrite
+        N = len(nums)                                   #   Time Complexity: O(N), Space Complexity: O(N)
+        Zero_count = One_count = Two_count = 0
+        for i in range(N):
+            if nums[i] == 0:
+                Zero_count += 1
+            elif nums[i] == 1:
+                One_count += 1
+            else:
+                Two_count += 1
+        for j in range(N):
+            if Zero_count > 0:
+                nums[j] = 0
+                Zero_count -= 1
+            elif One_count > 0:
+                nums[j] = 1
+                One_count -= 1
+            else:
+                nums[j] = 2
+                Two_count -= 1
+        return nums
+
+                                        # Optimal Soln - Using the Dutch National Flag Algorithm
+    def sortColors_Dutch_National_Flag_Soln(self, nums: list[int]) -> None: # Time Complexity: O(N), Space Complexity: O(N)
+        N = len(nums)
+        # Initialize three pointers to partition the array into four regions:
+            # [0 ... low-1]   -> all 0s
+            # [low ... mid-1] -> all 1s
+            # [mid ... high]  -> unknown/unprocessed elements
+            # [high+1 ... N-1]-> all 2s
+        low = mid = 0
+        high = N - 1
+        while mid <= high:          # Process elements until the unknown region is completely exhausted
+            if nums[mid] == 0:
+                nums[mid], nums[low] = nums[low], nums[mid]   # Move 0 to the front partition and expand both 0s and 1s boundaries
+                low += 1
+                mid += 1
+            elif nums[mid] == 1:    # 1 is already in the correct middle region; just advance mid
+                mid += 1
+            else:                   # nums[mid] == 2: Move 2 to the back partition and shrink the unknown region.
+                nums[mid], nums[high] = nums[high], nums[mid]
+                high -= 1           # Do NOT increment mid here because the swapped element from high is still unprocessed
+
+# -----------------------------------------------------------------------------------------------------------
 
 
 
