@@ -1,4 +1,4 @@
-# 🐍 Python DSA Practice
+# <img width="28" height="28" alt="image" src="https://github.com/user-attachments/assets/a81dc5a6-d39a-4e1a-bbf6-c1f99a3bab94" /> Python DSA Practice
 
 Daily collection of Data Structures & Algorithms problems solved in Python. This repository tracks my continuous problem-solving journey, algorithmic thinking, and code optimization techniques.
 
