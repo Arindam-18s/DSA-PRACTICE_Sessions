@@ -857,32 +857,49 @@ def check(n, t):
 print(check(n, t))
 
 # ------------------------------------------------- 
-# 53. Maximum Subarray - nums = [-2,1,-3,4,-1,2,1,-5,4] - o/p -> ([4, -1, 2, 1], 6)
+# 53. Maximum Subarray - Given an integer array nums, find the subarray with the largest sum, and return its sum.
+                       # nums = [-2,1,-3,4,-1,2,1,-5,4] - o/p -> ([4, -1, 2, 1], 6)
 
-from typing import List
-nums = [-2,1,-3,4,-1,2,1,-5,4]
+class Solution:                         # Better Soln - Time Col - O(N^2),  Space Col - O(1)
+    def maxSubArray(self, nums: list[int]) -> int:
+        # Subarray - Contigious part of the array
+        nums = [-2,-3,4,-1,-2,1,5,-3]
+        N = len(nums)
+        max_sum_subarray = float('-inf')
+        ans = nums
+        for i in range(N):
+            curr_sum = 0
+            curr_arr = []
+            for j in range(i, N):
+                curr_arr.append(nums[j])
+                curr_sum += nums[j]
+                if curr_sum > max_sum_subarray:
+                    max_sum_subarray = curr_sum
+                    ans = curr_arr
+        print(max_sum_subarray, ans)
 
-def subarr(nums: List[int]):
-    sum = 0
-    max_sum = float('-inf')
-    ans = []
-    best_ans = []
-    for n in nums:
-        if sum < 0:
-            sum = n
-            ans = [n]
-        else:
-            sum += n
-            ans.append(n)
-        if sum > max_sum:
-            max_sum = sum
-            best_ans = ans.copy()
+                                    # Kadane's Algorithm - Time Col - O(N),  Space Col - O(1) 
+    def MaxSumSubarr_KadaneAlgo(nums: List[int]):
+        N = len(nums)
+        sum = 0
+        max_sum = float('-inf')
+        ans_start = -1
+        ans_end = -1
+        for i in range(N):
+            if sum == 0:        # for keeping a track of the max_sum subarray
+                start = i
+            sum += nums[i]
+            if sum > max_sum:
+                max_sum = sum
+                ans_start = start
+                ans_end = i
+            if sum < 0:     # if at any point in time sum becomes lesser than 0 don't carry the sum over cause the sum
+                sum = 0     # will not be larger later it will only go more lesser, rathar initialize the sum back to 0.
 
-    return best_ans, max_sum
-        
-print(subarr(nums))
+        print(nums[ans_start : ans_end])
+        return max_sum      # although the max_sum can be -ve here
 
-# ------------------------------------------------- 
+# ----------------------------------------------------------------------------------------------------------------- 
 # 191. Number of 1 Bits - Input: n = 128 / Output: 1 - The input binary string 10000000 has a total of one set bit.
 
 class Solution:
@@ -4540,7 +4557,7 @@ class Solution:
         return nums
 
                                         # Optimal Soln - Using the Dutch National Flag Algorithm
-    def sortColors_Dutch_National_Flag_Soln(self, nums: list[int]) -> None: # Time Complexity: O(N), Space Complexity: O(N)
+    def sortColors_Dutch_National_Flag_Soln(self, nums: list[int]) -> None: # Time Complexity: O(N), Space Complexity: O(1)
         N = len(nums)
         # Initialize three pointers to partition the array into four regions:
             # [0 ... low-1]   -> all 0s
@@ -4561,11 +4578,72 @@ class Solution:
                 high -= 1           # Do NOT increment mid here because the swapped element from high is still unprocessed
 
 # -----------------------------------------------------------------------------------------------------------
+#  1352 : Product of the Last K Numbers - Design a data structure ProductOfNumbers() to track a stream of integers 
+        # and query the product of the last $k$ elements in O(1) time.
+        # ProductOfNumbers() — Initializes an empty stream.     |   add(num: int) -> None — Appends num to the stream.
+        # getProduct(k: int) -> int — Returns the product of the last `K` integers 
+                        # Assumes stream length >= k and product fits in 32-bit int.
+class ProductOfNumbers:     # Time - O(1), Space - O(N)
+    MOD = 10**4 * 4
+    def __init__(self):
+        self.pref = [1]
 
+    def add(self, num: int) -> None:
+        if num == 0:
+            self.pref = [1]         # Reset prefix products because any product spanning this 0 will be 0
+        else:
+            self.pref.append(self.pref[-1] * num)
 
+    def getProduct(self, k: int) -> int:
+        if k >= len(self.pref):     # If k is at least the length of valid non-zero products, a 0 was included
+            return 0
+        else:
+            return self.pref[-1] // self.pref[-1 - k]   # Product of last k is givem by = pref[-1] // pref[-1 - k]
 
+# -----------------------------------------------------------------------------------------------------------
+# 169. Majority Element - Given an array nums of size n, return the majority element. The majority element
+                        # is the element that appears more than ⌊n / 2⌋ times. 
+                # Better Soln - Using Hashing
+class Solution:
+    def majorityElement(self, nums: list[int]) -> int:     # Time Complexity: O(N)  |   Space Complexity: O(N)
+        N = len(nums)
+        hash_set = {}
+        for i in range(N):
+            if nums[i] in hash_set:
+                hash_set[nums[i]] += 1
+            else:
+                hash_set[nums[i]] = 1
+        # print(hash_set)
+        # print(N // 2)
+        for num, count in hash_set.items():
+            if count > (N // 2):
+                return num
+        return -1
 
+                # Optimal Soln. - Moore's Voting Algorithm
+class Solution:
+    def majorityElement(self, nums: list[int]) -> int:     # Time Complexity: O(N)  |   Space Complexity: O(1)
+        N = len(nums)
+        count = 0
+        elmt = nums[0]
+        for i in range(N):
+            if count == 0:
+                count += 1
+                elmt = nums[i]
+            elif (nums[i] == elmt):
+                count += 1
+            else:
+                count -= 1
+        element_count = 0
+        for i in range(N):
+            if nums[i] == elmt:
+                element_count += 1
+        if element_count > (N // 2):
+            return elmt
+        else:
+            return -1
 
+# -----------------------------------------------------------------------------------------------------------
 
 
 

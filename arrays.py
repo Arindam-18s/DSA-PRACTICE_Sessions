@@ -1,3 +1,5 @@
+from typing import List
+# ``````````````````````````````````````````````````
 # 896. Monotonic Array - O(n) soln
 
 class Solution(object):
@@ -795,9 +797,164 @@ class Solution:
                 high -= 1           # Do NOT increment mid here because the swapped element from high is still unprocessed
 
 # -----------------------------------------------------------------------------------------------------------
-        
+# 169. Majority Element - Given an array nums of size n, return the majority element. The majority element
+                        # is the element that appears more than ⌊n / 2⌋ times. 
+                # Better Soln - Using Hashing
+class Solution:
+    def majorityElement(self, nums: list[int]) -> int:     # Time Complexity: O(N)  |   Space Complexity: O(N)
+        N = len(nums)
+        hash_set = {}
+        for i in range(N):
+            if nums[i] in hash_set:
+                hash_set[nums[i]] += 1
+            else:
+                hash_set[nums[i]] = 1
+        # print(hash_set)
+        # print(N // 2)
+        for num, count in hash_set.items():
+            if count > (N // 2):
+                return num
+        return -1
 
+                # Optimal Soln. - Moore's Voting Algorithm
+class Solution:
+    def majorityElement(self, nums: list[int]) -> int:     # Time Complexity: O(N)  |   Space Complexity: O(1)
+        N = len(nums)
+        count = 0
+        elmt = nums[0]
+        for i in range(N):
+            if count == 0:
+                count += 1
+                elmt = nums[i]
+            elif (nums[i] == elmt):
+                count += 1
+            else:
+                count -= 1
+        element_count = 0
+        for i in range(N):
+            if nums[i] == elmt:
+                element_count += 1
+        if element_count > (N // 2):
+            return elmt
+        else:
+            return -1
 
+# -----------------------------------------------------------------------------------------------------------
+# 53. Maximum Subarray - Given an integer array nums, find the subarray with the largest sum, and return its sum.
+                       # nums = [-2,1,-3,4,-1,2,1,-5,4] - o/p -> ([4, -1, 2, 1], 6)
 
+class Solution:                         # Better Soln - Time Col - O(N^2),  Space Col - O(1)
+    def maxSubArray(self, nums: list[int]) -> int:
+        # Subarray - Contigious part of the array
+        nums = [-2,-3,4,-1,-2,1,5,-3]
+        N = len(nums)
+        max_sum_subarray = float('-inf')
+        ans = nums
+        for i in range(N):
+            curr_sum = 0
+            curr_arr = []
+            for j in range(i, N):
+                curr_arr.append(nums[j])
+                curr_sum += nums[j]
+                if curr_sum > max_sum_subarray:
+                    max_sum_subarray = curr_sum
+                    ans = curr_arr
+        print(max_sum_subarray, ans)
 
+                                    # Kadane's Algorithm - Time Col - O(N),  Space Col - O(1) 
+    def MaxSumSubarr_KadaneAlgo(nums: List[int]):
+        N = len(nums)
+        sum = 0
+        max_sum = float('-inf')
+        ans_start = -1
+        ans_end = -1
+        for i in range(N):
+            if sum == 0:        # for keeping a track of the max_sum subarray
+                start = i
+            sum += nums[i]
+            if sum > max_sum:
+                max_sum = sum
+                ans_start = start
+                ans_end = i
+            if sum < 0:     # if at any point in time sum becomes lesser than 0 don't carry the sum over cause the sum
+                sum = 0     # will not be larger later it will only go more lesser, rathar initialize the sum back to 0.
 
+        print(nums[ans_start : ans_end])
+        return max_sum      # although the max_sum can be -ve here
+
+# ----------------------------------------------------------------------------------------------------------------- 
+# 2149: Rearrange Array Elements by Sign - A 0-indexed integer array nums of even length n, 
+      # containing an equal count of positive ($n/2$) and negative ($n/2$) integers (no zeros).
+      # Output: A new array of length n where: Positive numbers occupy all even indices (0, 2, 4,...).
+      #         Negative numbers occupy all odd indices (1, 3, 5,...).
+      #         Relative order among positives is preserved, and relative order among negatives is preserved.
+
+                            # Brute Force Soln. - Time - O(2N), Space - O(N)
+class Solution:
+    def rearrangeArray(self, nums: list[int]) -> list[int]:
+        N = len(nums)
+        pos = []
+        neg = []
+        for i in range(N):
+            if nums[i] < 0:
+                neg.append(nums[i])
+            else:
+                pos.append(nums[i])
+        for i in range(N // 2):
+            nums[2 * i] = pos[i]
+            nums[2 * i + 1] = neg[i]
+        return nums
+
+                            # Optimal Soln. - Time - O(N), Space - O(N)
+    def rearrangeArray(self, nums: list[int]) -> list[int]:
+        N = len(nums)
+        ans = [0] * N
+        pos_idx = 0
+        neg_idx = 1
+        for i in range(N):
+            if nums[i] < 0:
+                ans[neg_idx] = nums[i]
+                neg_idx += 2
+            else:
+                ans[pos_idx] = nums[i]
+                pos_idx += 2
+        return ans
+
+# ----------------------------------------------------------------------------------------------------------------- 
+# Problem - Alternate Numbers - Given an unsorted array arr containing both positive and negative numbers. 
+          # Your task is to rearrange the array and convert it into an array of alternate positive and 
+          # negative numbers without changing the relative order. - Array Can Contain UnEven Number of +ve and -ve elements
+                                                                #``````````````````````````````````````````````````````````
+def Alternate_numbers():
+    nums = [-1, 2, 3, 4 , -3, 1, 4, -3]             # Time - O(2N), Space - O(N)
+    N = len(nums)
+    pos = []
+    neg = []
+
+    for i in range(N):
+        if nums[i] > 0:
+            pos.append(nums[i])
+        else:
+            neg.append(nums[i])
+
+    if len(pos) > len(neg):
+        for i in range(len(neg)):
+            nums[2 * i] = pos[i]
+            nums[2 * i + 1] = neg[i]
+
+        remaining_pos_idx = len(neg) * 2        # Remainning Elements in the positive elements array
+        for j in range(len(neg), len(pos)):
+            nums[remaining_pos_idx] = pos[j]
+            remaining_pos_idx += 1
+    else:
+        for i in range(len(pos)):
+            nums[2 * i] = pos[i]
+            nums[2 * i + 1] = neg[i]
+
+        remaining_pos_idx = len(pos) * 2        # Remainning Elements in the negative elements array
+        for j in range(len(pos), len(neg)):
+            nums[remaining_pos_idx] = neg[j]
+            remaining_pos_idx += 1
+    print(nums)
+
+# ----------------------------------------------------------------------------------------------------------------- 
